@@ -4,10 +4,11 @@
  * 
  * @param {string} diffText - Git diff content.
  * @param {string} architectureDocs - Content of architecture.md.
- * @param {object} [aiClient] - Optional GoogleGenAI or OpenAI client instance.
+ * @param {object} [aiClient] - Universal OpenAI or GoogleGenAI client instance.
+ * @param {string} [modelName] - Optional AI model name override.
  * @returns {Promise<{ pass: boolean, summary: string, violations: string[] }>}
  */
-async function evaluateArchitecture(diffText, architectureDocs = '', aiClient = null) {
+async function evaluateArchitecture(diffText, architectureDocs = '', aiClient = null, modelName = null) {
   if (!diffText || typeof diffText !== 'string' || diffText.trim() === '') {
     return {
       pass: true,
@@ -44,18 +45,19 @@ ${diffText}
 
     try {
       let responseText = '';
-      if (aiClient.models && typeof aiClient.models.generateContent === 'function') {
+      if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
+        const res = await aiClient.chat.completions.create({
+          model: modelName || aiClient.defaultModel || 'gpt-4o-mini',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.2,
+        });
+        responseText = res.choices[0]?.message?.content || '';
+      } else if (aiClient.models && typeof aiClient.models.generateContent === 'function') {
         const res = await aiClient.models.generateContent({
-          model: 'gemini-2.0-flash',
+          model: modelName || 'gemini-2.0-flash',
           contents: prompt,
         });
         responseText = res.text || '';
-      } else if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
-        const res = await aiClient.chat.completions.create({
-          model: 'meta/llama-3.3-70b-instruct',
-          messages: [{ role: 'user', content: prompt }],
-        });
-        responseText = res.choices[0]?.message?.content || '';
       }
 
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);

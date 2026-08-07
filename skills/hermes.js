@@ -3,10 +3,11 @@
  * Advanced technical debt scanner for TODOs, FIXMEs, hardcoded secrets, console logs, and empty function stubs.
  * 
  * @param {Array<{path: string, content: string}>|Object<string, string>} fileContentsMap - File list or path->content map.
- * @param {object} [aiClient] - Optional GoogleGenAI or OpenAI client instance.
+ * @param {object} [aiClient] - Universal OpenAI or GoogleGenAI client instance.
+ * @param {string} [modelName] - Optional AI model name override.
  * @returns {Promise<{ debtFound: boolean, items: Array<{ file: string, line: number, issue: string, severity: 'BLOCK'|'WARN'|'INFO' }> }>}
  */
-async function detectTechnicalDebt(fileContentsMap, aiClient = null) {
+async function detectTechnicalDebt(fileContentsMap, aiClient = null, modelName = null) {
   const items = [];
 
   // Normalize input into an array of { file, content }
@@ -73,18 +74,19 @@ ${content}
 `;
       try {
         let responseText = '';
-        if (aiClient.models && typeof aiClient.models.generateContent === 'function') {
+        if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
+          const res = await aiClient.chat.completions.create({
+            model: modelName || aiClient.defaultModel || 'gpt-4o-mini',
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.2,
+          });
+          responseText = res.choices[0]?.message?.content || '';
+        } else if (aiClient.models && typeof aiClient.models.generateContent === 'function') {
           const res = await aiClient.models.generateContent({
-            model: 'gemini-2.0-flash',
+            model: modelName || 'gemini-2.0-flash',
             contents: prompt,
           });
           responseText = res.text || '';
-        } else if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
-          const res = await aiClient.chat.completions.create({
-            model: 'meta/llama-3.3-70b-instruct',
-            messages: [{ role: 'user', content: prompt }],
-          });
-          responseText = res.choices[0]?.message?.content || '';
         }
 
         const jsonMatch = responseText.match(/\[[\s\S]*\]/);

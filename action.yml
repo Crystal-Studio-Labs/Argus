@@ -1,16 +1,27 @@
 name: 'ARGUS AI PR Reviewer'
-description: 'AI-powered GitHub Action that runs Atlas, Athena, and Hermes evaluation stages on PRs.'
+description: 'AI-powered GitHub Action running Atlas, Athena, and Hermes evaluation stages using any OpenAI-compatible provider (OpenAI, NVIDIA, OpenRouter, Groq, Gemini).'
 author: 'SahooShuvranshu'
 inputs:
   github-token:
     description: 'GitHub token for posting comments and retrieving PR info'
     required: true
     default: ${{ github.token }}
+  api-key:
+    description: 'Universal API Key for AI provider (OpenAI, NVIDIA, OpenRouter, Groq, Gemini)'
+    required: false
+  base-url:
+    description: 'Base URL endpoint for OpenAI-compatible provider (e.g. https://openrouter.ai/api/v1, https://integrate.api.nvidia.com/v1)'
+    required: false
+    default: 'https://api.openai.com/v1'
+  model:
+    description: 'AI Model name (e.g. gpt-4o-mini, meta/llama-3.3-70b-instruct, google/gemini-2.0-flash-001)'
+    required: false
+    default: 'gpt-4o-mini'
   gemini-api-key:
-    description: 'API key for Google Gemini API'
+    description: 'Legacy input for Google Gemini API key'
     required: false
   nvidia-api-key:
-    description: 'API key for NVIDIA API (OpenAI compatible)'
+    description: 'Legacy input for NVIDIA API key'
     required: false
 runs:
   using: 'node20'

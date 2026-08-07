@@ -30,5 +30,6 @@ jobs:
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
-          nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}
+          api-key: ${{ secrets.AI_API_KEY || secrets.GEMINI_API_KEY || secrets.NVIDIA_API_KEY || secrets.OPENAI_API_KEY }}
+          base-url: ${{ vars.AI_BASE_URL }}
+          model: ${{ vars.AI_MODEL }}

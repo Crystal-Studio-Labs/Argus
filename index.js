@@ -12,8 +12,54 @@ const detectTechnicalDebt = require('./skills/hermes');
 async function run() {
   try {
     const token = core.getInput('github-token', { required: true });
-    const geminiApiKey = core.getInput('gemini-api-key') || process.env.GEMINI_API_KEY;
-    const nvidiaApiKey = core.getInput('nvidia-api-key') || process.env.NVIDIA_API_KEY;
+
+    // Inputs & Env Fallbacks for Universal AI Client Setup
+    const apiKey = core.getInput('api-key')
+      || core.getInput('openai-api-key')
+      || core.getInput('gemini-api-key')
+      || core.getInput('nvidia-api-key')
+      || process.env.OPENAI_API_KEY
+      || process.env.AI_API_KEY
+      || process.env.NVIDIA_API_KEY
+      || process.env.OPENROUTER_API_KEY
+      || process.env.GEMINI_API_KEY;
+
+    let baseURL = core.getInput('base-url') || process.env.OPENAI_BASE_URL || process.env.AI_BASE_URL;
+    let modelName = core.getInput('model') || process.env.OPENAI_MODEL || process.env.AI_MODEL;
+
+    // Smart provider detection defaults
+    if (apiKey && apiKey.startsWith('nvapi-') && (!baseURL || baseURL.includes('openai.com'))) {
+      baseURL = 'https://integrate.api.nvidia.com/v1';
+      if (!modelName || modelName === 'gpt-4o-mini') {
+        modelName = 'meta/llama-3.3-70b-instruct';
+      }
+    }
+
+    if (apiKey && apiKey.startsWith('sk-or-') && (!baseURL || baseURL.includes('openai.com'))) {
+      baseURL = 'https://openrouter.ai/api/v1';
+      if (!modelName || modelName === 'gpt-4o-mini') {
+        modelName = 'google/gemini-2.0-flash-001';
+      }
+    }
+
+    let aiClient = null;
+    if (apiKey) {
+      if (apiKey.startsWith('AQ.') || apiKey.startsWith('AIza')) {
+        aiClient = new GoogleGenAI({ apiKey });
+        aiClient.defaultModel = modelName || 'gemini-2.0-flash';
+        core.info(`Initialized Google Gemini SDK client (Model: ${aiClient.defaultModel})`);
+      } else {
+        const finalBaseURL = baseURL || 'https://api.openai.com/v1';
+        aiClient = new OpenAI({
+          apiKey,
+          baseURL: finalBaseURL,
+        });
+        aiClient.defaultModel = modelName || 'gpt-4o-mini';
+        core.info(`Initialized Universal OpenAI-compatible AI client (BaseURL: ${finalBaseURL}, Model: ${aiClient.defaultModel})`);
+      }
+    } else {
+      core.warning('No AI API key provided. ARGUS will operate using fallback static analysis rules.');
+    }
 
     const context = github.context;
     if (context.eventName !== 'pull_request') {
@@ -29,21 +75,6 @@ async function run() {
     core.info(`Starting ARGUS code review for PR #${pullNumber} in ${owner}/${repo}`);
 
     const octokit = github.getOctokit(token);
-
-    // Initialize AI client
-    let aiClient = null;
-    if (geminiApiKey) {
-      aiClient = new GoogleGenAI({ apiKey: geminiApiKey });
-      core.info('Initialized Google Gemini AI client.');
-    } else if (nvidiaApiKey) {
-      aiClient = new OpenAI({
-        apiKey: nvidiaApiKey,
-        baseURL: 'https://integrate.api.nvidia.com/v1',
-      });
-      core.info('Initialized NVIDIA OpenAI-compatible client.');
-    } else {
-      core.warning('No GEMINI_API_KEY or NVIDIA_API_KEY provided. ARGUS will operate using fallback static analysis rules.');
-    }
 
     // 1. Fetch Git Diff
     core.info('Fetching PR git diff...');
@@ -92,13 +123,13 @@ async function run() {
 
     // 4. Run Skills Sequentially
     core.info('Stage 1: Executing Atlas (Visual Impact Map)...');
-    const atlasResult = await generateTopologyMap(diffText, aiClient);
+    const atlasResult = await generateTopologyMap(diffText, aiClient, modelName);
 
     core.info('Stage 2: Executing Athena (Architecture Report)...');
-    const athenaResult = await evaluateArchitecture(diffText, architectureDocs, aiClient);
+    const athenaResult = await evaluateArchitecture(diffText, architectureDocs, aiClient, modelName);
 
     core.info('Stage 3: Executing Hermes (Technical Debt Warnings)...');
-    const hermesResult = await detectTechnicalDebt(fileContentsMap, aiClient);
+    const hermesResult = await detectTechnicalDebt(fileContentsMap, aiClient, modelName);
 
     // 5. Build Polished Markdown Review Comment
     const athenaStatus = athenaResult.pass ? '✅ COMPLIANT' : '⚠️ VIOLATIONS DETECTED';
