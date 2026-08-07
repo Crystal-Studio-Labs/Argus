@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sahooshuvranshu.github.io/Argus/sitemap.xml

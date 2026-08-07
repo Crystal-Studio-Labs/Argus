@@ -1,0 +1,22 @@
+# ARGUS — Automated AI Code Reviewer & Architecture Guardian
+
+> ARGUS is an autonomous 3-stage AI code reviewer GitHub Action built for developer productivity in the software lifecycle. Named after Argus Panoptes (the 100-eyed guardian in Greek mythology), it evaluates Pull Request git diffs sequentially across three specialized skills: Atlas, Athena, and Hermes.
+
+## Core Capabilities & 3-Stage Pipeline
+- **Stage 1: Atlas (`skills/atlas.js`)**: Converts raw PR git diffs into an interactive Mermaid.js flowchart (`flowchart TD`) mapping changed files, modules, and visual control flows.
+- **Stage 2: Athena (`skills/athena.js`)**: Cross-references PR code diffs against repository `architecture.md` rules to prevent modular decay and architectural layering violations.
+- **Stage 3: Hermes (`skills/hermes.js`)**: Scans modified code line-by-line for technical debt, unfinished `// TODO` stubs, debug statements, and hardcoded API keys/secrets with severity badges (`🔴 BLOCK`, `🟡 WARN`, `🔵 INFO`).
+
+## Universal AI Cloud Provider Compatibility
+- **Google Gemini (Default)**: Supported natively via `@google/genai` SDK (`gemini-2.0-flash`). No base-url required.
+- **Universal OpenAI-Compatible**: Routes requests to NVIDIA NIM, OpenRouter, Groq Cloud, Together AI, or OpenAI via custom `base-url`, `api-key`, and `model` workflow inputs.
+- **Fallback Engine**: Includes an offline static regex analysis engine if API rate limits or network issues occur.
+
+## Key Files & Repository Links
+- Website Showcase: https://sahooshuvranshu.github.io/Argus/
+- Full Documentation: https://sahooshuvranshu.github.io/Argus/documentation.html
+- GitHub Repository: https://github.com/SahooShuvranshu/Argus
+- GitHub Marketplace: https://github.com/marketplace/actions/argus
+- Security Policy: https://github.com/SahooShuvranshu/Argus/blob/main/SECURITY.md
+- Contributing Guide: https://github.com/SahooShuvranshu/Argus/blob/main/CONTRIBUTING.md
+- Contact Email: contact@sahooshuvranshu.is-a.dev
