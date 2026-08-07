@@ -1,4 +1,4 @@
-name: 'Argus'
+name: 'Argus AI Code Reviewer'
 description: 'Autonomous 3-stage AI code reviewer executing visual topology, architectural compliance, and technical debt scans.'
 author: 'SahooShuvranshu'
 inputs:
