@@ -13,42 +13,40 @@ async function run() {
   try {
     const token = core.getInput('github-token', { required: true });
 
-    // Inputs & Env Fallbacks for Universal AI Client Setup
+    // Inputs & Env Fallbacks (Gemini Primary, Universal OpenAI Provider Compatible)
     const apiKey = core.getInput('api-key')
-      || core.getInput('openai-api-key')
       || core.getInput('gemini-api-key')
+      || core.getInput('openai-api-key')
       || core.getInput('nvidia-api-key')
+      || process.env.GEMINI_API_KEY
       || process.env.OPENAI_API_KEY
       || process.env.AI_API_KEY
       || process.env.NVIDIA_API_KEY
-      || process.env.OPENROUTER_API_KEY
-      || process.env.GEMINI_API_KEY;
+      || process.env.OPENROUTER_API_KEY;
 
     let baseURL = core.getInput('base-url') || process.env.OPENAI_BASE_URL || process.env.AI_BASE_URL;
-    let modelName = core.getInput('model') || process.env.OPENAI_MODEL || process.env.AI_MODEL;
+    let modelName = core.getInput('model') || process.env.GEMINI_MODEL || process.env.OPENAI_MODEL || process.env.AI_MODEL || 'gemini-2.0-flash';
 
     // Smart provider detection defaults
     if (apiKey && apiKey.startsWith('nvapi-') && (!baseURL || baseURL.includes('openai.com'))) {
       baseURL = 'https://integrate.api.nvidia.com/v1';
-      if (!modelName || modelName === 'gpt-4o-mini') {
-        modelName = 'meta/llama-3.3-70b-instruct';
-      }
+      modelName = 'meta/llama-3.3-70b-instruct';
     }
 
     if (apiKey && apiKey.startsWith('sk-or-') && (!baseURL || baseURL.includes('openai.com'))) {
       baseURL = 'https://openrouter.ai/api/v1';
-      if (!modelName || modelName === 'gpt-4o-mini') {
-        modelName = 'google/gemini-2.0-flash-001';
-      }
+      modelName = 'google/gemini-2.0-flash-001';
     }
 
     let aiClient = null;
     if (apiKey) {
-      if (apiKey.startsWith('AQ.') || apiKey.startsWith('AIza')) {
+      if (apiKey.startsWith('AQ.') || apiKey.startsWith('AIza') || !baseURL) {
+        // Native Google Gemini SDK (Primary Default)
         aiClient = new GoogleGenAI({ apiKey });
         aiClient.defaultModel = modelName || 'gemini-2.0-flash';
-        core.info(`Initialized Google Gemini SDK client (Model: ${aiClient.defaultModel})`);
+        core.info(`Initialized Google Gemini SDK client (Default Model: ${aiClient.defaultModel})`);
       } else {
+        // Universal OpenAI-compatible SDK (OpenAI, NVIDIA, OpenRouter, Groq, Together)
         const finalBaseURL = baseURL || 'https://api.openai.com/v1';
         aiClient = new OpenAI({
           apiKey,

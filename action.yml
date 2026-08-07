@@ -1,5 +1,5 @@
 name: 'ARGUS'
-description: 'AI-powered GitHub Action running Atlas, Athena, and Hermes evaluation stages using any OpenAI-compatible provider (OpenAI, NVIDIA, OpenRouter, Groq, Gemini).'
+description: 'Autonomous AI PR Reviewer running Atlas, Athena, and Hermes evaluation stages using Google Gemini (default) or any OpenAI-compatible cloud provider.'
 author: 'SahooShuvranshu'
 inputs:
   github-token:
@@ -7,21 +7,20 @@ inputs:
     required: true
     default: ${{ github.token }}
   api-key:
-    description: 'Universal API Key for AI provider (OpenAI, NVIDIA, OpenRouter, Groq, Gemini)'
+    description: 'Universal API Key for Google Gemini (default) or OpenAI-compatible provider (NVIDIA, OpenRouter, Groq, OpenAI)'
+    required: false
+  gemini-api-key:
+    description: 'Google Gemini API key'
     required: false
   base-url:
-    description: 'Base URL endpoint for OpenAI-compatible provider (e.g. https://openrouter.ai/api/v1, https://integrate.api.nvidia.com/v1)'
+    description: 'Base URL endpoint for OpenAI-compatible providers (optional)'
     required: false
-    default: 'https://api.openai.com/v1'
   model:
-    description: 'AI Model name (e.g. gpt-4o-mini, meta/llama-3.3-70b-instruct, google/gemini-2.0-flash-001)'
+    description: 'AI Model name (default: gemini-2.0-flash)'
     required: false
-    default: 'gpt-4o-mini'
-  gemini-api-key:
-    description: 'Legacy input for Google Gemini API key'
-    required: false
+    default: 'gemini-2.0-flash'
   nvidia-api-key:
-    description: 'Legacy input for NVIDIA API key'
+    description: 'NVIDIA API key'
     required: false
 runs:
   using: 'node20'

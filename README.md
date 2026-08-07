@@ -6,7 +6,18 @@
 [![License: MIT](https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Track B](https://img.shields.io/badge/TRACK_B-DEVELOPER_PRODUCTIVITY-blue?style=for-the-badge)](#-hackathon-context--acknowledgments)
 
-> **ARGUS** is an autonomous, agentic GitHub Action designed to streamline code reviews. Operating as an automated Senior Software Architect, ARGUS executes a 3-stage evaluation pipeline on Pull Requests to generate visual topology flowcharts, enforce architectural compliance, and catch technical debt before code merges into `main`.
+> **ARGUS** is an autonomous, agentic GitHub Action powered primarily by **Google Gemini** (`gemini-2.0-flash`) with universal OpenAI cloud compatibility. Operating as an automated Senior Software Architect, ARGUS executes a 3-stage evaluation pipeline on Pull Requests to generate visual topology flowcharts, enforce architectural compliance, and catch technical debt before code merges into `main`.
+
+---
+
+## 🏛️ Mythological Inspiration & Codebase Mapping
+
+The naming and architecture of ARGUS and its three skills are directly inspired by ancient Greek mythology:
+
+- **👁️ ARGUS (Argus Panoptes - Ἄργος Πανόπτης)**: The 100-eyed all-seeing giant who never slept. In this codebase ([`index.js`](file:///D:/Projects/Argus/index.js)), ARGUS is the 100-eye all-seeing PR reviewer watching over every pull request event to prevent bugs, architectural decay, and unfinished code from slipping into production.
+- **🎨 Atlas (Ἄτλας)**: The Titan who holds up the celestial heavens. In this codebase ([`skills/atlas.js`](file:///D:/Projects/Argus/skills/atlas.js)), Atlas parses raw git diffs and draws visual Mermaid.js flowcharts (`flowchart TD`) showing how modified code paths and file structures hold up the system topology.
+- **🏛️ Athena (Ἀθηνᾶ)**: The Greek goddess of wisdom and strategy. In this codebase ([`skills/athena.js`](file:///D:/Projects/Argus/skills/athena.js)), Athena acts as the strategic Architecture Guardian, cross-referencing PR code changes against [`architecture.md`](file:///D:/Projects/Argus/architecture.md) rules to enforce clean architectural boundaries.
+- **⚡ Hermes (Ἑρμῆς)**: The swift, wing-footed messenger god who inspects hidden corners. In this codebase ([`skills/hermes.js`](file:///D:/Projects/Argus/skills/hermes.js)), Hermes swiftly inspects modified files line-by-line, discovering hidden secrets, `// TODO` comments, debug `console.log` statements, and empty function stubs with severity warning badges (`🔴 BLOCK`, `🟡 WARN`, `🔵 INFO`).
 
 ---
 
@@ -26,7 +37,7 @@ flowchart TD
     Stage2 --> Skills2["skills/athena.js"]
     Stage3 --> Skills3["skills/hermes.js"]
     
-    Skills & Skills2 & Skills3 --> LLM["Cloud AI Provider (OpenAI / NVIDIA / OpenRouter / Gemini / Groq)"]
+    Skills & Skills2 & Skills3 --> LLM["Google Gemini (Default) / OpenAI Compatible Cloud Provider"]
     Pipeline --> Scorecard["Idempotent PR Review Comment & Scorecard"]
 ```
 
@@ -42,25 +53,27 @@ flowchart TD
 
 ---
 
-## 🌐 Universal AI Cloud Provider Compatibility
+## 🌐 Universal AI Cloud Provider Compatibility (Google Gemini Primary Default)
 
-ARGUS supports **any OpenAI-compatible AI Cloud Provider** out-of-the-box using standard inputs:
+ARGUS is powered by **Google Gemini** (`gemini-2.0-flash`) by default, while supporting **any OpenAI-compatible AI Cloud Provider** out-of-the-box using standard inputs:
 
-| AI Provider | Base URL (`base-url`) | Default / Sample Model (`model`) |
-| :--- | :--- | :--- |
-| **OpenAI** | `https://api.openai.com/v1` *(default)* | `gpt-4o-mini`, `gpt-4o` |
-| **NVIDIA NIM** | `https://integrate.api.nvidia.com/v1` | `meta/llama-3.3-70b-instruct`, `nvidia/llama-3.1-nemotron-70b-instruct` |
-| **OpenRouter** | `https://openrouter.ai/api/v1` | `google/gemini-2.0-flash-001`, `deepseek/deepseek-r1` |
-| **Groq** | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
-| **Google Gemini** | Native SDK / OpenAI Endpoint | `gemini-2.0-flash`, `gemini-1.5-flash` |
+| AI Provider | Base URL (`base-url`) | Default / Sample Model (`model`) | Key Required |
+| :--- | :--- | :--- | :--- |
+| **Google Gemini** *(Default)* | *Not needed (Native SDK)* | `gemini-2.0-flash`, `gemini-1.5-flash` | `gemini-api-key` |
+| **OpenAI** | `https://api.openai.com/v1` | `gpt-4o-mini`, `gpt-4o` | `api-key` |
+| **NVIDIA NIM** | `https://integrate.api.nvidia.com/v1` | `meta/llama-3.3-70b-instruct` | `api-key` |
+| **OpenRouter** | `https://openrouter.ai/api/v1` | `google/gemini-2.0-flash-001`, `deepseek/deepseek-r1` | `api-key` |
+| **Groq** | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` | `api-key` |
 
 *Note: Includes a built-in **Fallback Static Analysis Engine** that runs automatically if no LLM key is supplied or during network interruptions.*
 
 ---
 
-## 🚀 Quick Start & Workflow Usage
+## 🚀 Quick Start & Workflow Setup
 
-Add ARGUS to your repository by creating `.github/workflows/argus.yml`:
+Add ARGUS to your repository by creating `.github/workflows/argus.yml`.
+
+### Option A: Google Gemini API (Recommended Default — No `base-url` required)
 
 ```yaml
 name: ARGUS AI Code Review
@@ -91,13 +104,53 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run ARGUS AI Reviewer
+      - name: Run ARGUS AI Reviewer (Google Gemini)
         uses: SahooShuvranshu/Argus@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          api-key: ${{ secrets.AI_API_KEY || secrets.GEMINI_API_KEY }}
-          base-url: "https://api.openai.com/v1" # Optional: OpenAI-compatible endpoint
-          model: "gpt-4o-mini"                  # Optional: AI model choice
+          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+```
+
+---
+
+### Option B: Universal OpenAI-Compatible Cloud Provider (NVIDIA / OpenRouter / Groq / OpenAI)
+
+```yaml
+name: ARGUS AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  argus-review:
+    name: ARGUS 3-Stage AI PR Review
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ARGUS AI Reviewer (NVIDIA NIM / OpenRouter / Groq)
+        uses: SahooShuvranshu/Argus@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          api-key: ${{ secrets.NVIDIA_API_KEY }}               # or OPENROUTER_API_KEY / OPENAI_API_KEY
+          base-url: "https://integrate.api.nvidia.com/v1"      # or https://openrouter.ai/api/v1 / https://api.groq.com/openai/v1
+          model: "meta/llama-3.3-70b-instruct"                 # or google/gemini-2.0-flash-001 / llama-3.3-70b-versatile
 ```
 
 ---
@@ -118,7 +171,7 @@ jobs:
 ├── action.yml                 # GitHub Action metadata declaration
 ├── architecture.md            # Tech stack & 3-stage evaluation specification
 ├── AGENTS.md                  # Agent constitution, operating rules, and rule matrix
-├── AGENTS_AND_SKILLS.md       # ARGUS custom agent and skills contract
+├── AGENTS_AND_SKILLS.md       # ARGUS custom agent and skills contract (Greek myth mapping)
 ├── index.js                   # Core GitHub Action orchestrator script
 ├── package.json               # Dependencies and script definitions
 ├── README.md                  # Master documentation and quick start guide
@@ -162,7 +215,7 @@ This project was created for the **Do Or Redacted** Hackathon hosted by **HowToA
 
 - 📜 [**Architecture Specification**](architecture.md): Detailed tech stack, data flow, and pipeline architecture.
 - ⚖️ [**Agent Constitution**](AGENTS.md): Core operating principles, constraints, and rule matrix (`ARGUS-01`, `ARGUS-02`, `ARGUS-03`).
-- 🤖 [**Custom Agent & Skills System**](AGENTS_AND_SKILLS.md): Skill interface definitions for Atlas, Athena, and Hermes.
+- 🤖 [**Custom Agent & Skills System**](AGENTS_AND_SKILLS.md): Skill interface definitions for Atlas, Athena, and Hermes with mythological origins.
 - 🤝 [**Contributing Guidelines**](CONTRIBUTING.md): Guide for contributors and development setup.
 - 🛡️ [**Security Policy**](SECURITY.md): Security reporting procedures and supported versions.
 - 📜 [**Code of Conduct**](CODE_OF_CONDUCT.md): Community standards and pledge.
