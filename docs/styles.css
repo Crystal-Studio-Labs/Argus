@@ -818,7 +818,7 @@ code, pre, .font-mono {
   max-width: 1200px;
   margin: 0 auto 40px auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 32px;
   width: 100%;
 }
