@@ -1,0 +1,17 @@
+name: 'ARGUS AI PR Reviewer'
+description: 'AI-powered GitHub Action that runs Atlas, Athena, and Hermes evaluation stages on your PRs using Gemini.'
+author: 'SahooShuvranshu'
+inputs:
+  github-token:
+    description: 'GitHub token for posting comments and retrieving PR info'
+    required: true
+    default: ${{ github.token }}
+  gemini-api-key:
+    description: 'API key for Google Gemini'
+    required: true
+runs:
+  using: 'node20'
+  main: 'index.js'
+branding:
+  icon: 'eye'
+  color: 'purple'
