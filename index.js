@@ -18,11 +18,14 @@ async function run() {
       || core.getInput('gemini-api-key')
       || core.getInput('openai-api-key')
       || core.getInput('nvidia-api-key')
+      || core.getInput('openrouter-api-key')
+      || core.getInput('groq-api-key')
       || process.env.GEMINI_API_KEY
       || process.env.OPENAI_API_KEY
       || process.env.AI_API_KEY
       || process.env.NVIDIA_API_KEY
-      || process.env.OPENROUTER_API_KEY;
+      || process.env.OPENROUTER_API_KEY
+      || process.env.GROQ_API_KEY;
 
     let baseURL = core.getInput('base-url') || process.env.OPENAI_BASE_URL || process.env.AI_BASE_URL;
     let modelName = core.getInput('model') || process.env.GEMINI_MODEL || process.env.OPENAI_MODEL || process.env.AI_MODEL || 'gemini-2.0-flash';

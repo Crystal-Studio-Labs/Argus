@@ -1,27 +1,36 @@
 name: 'ARGUS'
-description: 'Autonomous AI PR Reviewer running Atlas, Athena, and Hermes evaluation stages using Google Gemini (default) or any OpenAI-compatible cloud provider.'
+description: 'Autonomous 3-stage AI code reviewer executing visual topology, architectural compliance, and technical debt scans.'
 author: 'SahooShuvranshu'
 inputs:
   github-token:
     description: 'GitHub token for posting comments and retrieving PR info'
-    required: true
-    default: ${{ github.token }}
+    required: false
+    default: '${{ github.token }}'
   api-key:
-    description: 'Universal API Key for Google Gemini (default) or OpenAI-compatible provider (NVIDIA, OpenRouter, Groq, OpenAI)'
+    description: 'Universal API Key for Google Gemini (default) or OpenAI-compatible providers'
     required: false
   gemini-api-key:
     description: 'Google Gemini API key'
     required: false
+  openai-api-key:
+    description: 'OpenAI API key'
+    required: false
+  nvidia-api-key:
+    description: 'NVIDIA NIM API key'
+    required: false
+  openrouter-api-key:
+    description: 'OpenRouter API key'
+    required: false
+  groq-api-key:
+    description: 'Groq Cloud API key'
+    required: false
   base-url:
-    description: 'Base URL endpoint for OpenAI-compatible providers (optional)'
+    description: 'Base URL endpoint for OpenAI-compatible providers'
     required: false
   model:
-    description: 'AI Model name (default: gemini-2.0-flash)'
+    description: 'AI model name (default: gemini-2.0-flash)'
     required: false
     default: 'gemini-2.0-flash'
-  nvidia-api-key:
-    description: 'NVIDIA API key'
-    required: false
 runs:
   using: 'node20'
   main: 'index.js'
