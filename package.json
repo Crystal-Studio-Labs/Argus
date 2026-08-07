@@ -4,7 +4,7 @@
   "description": "ARGUS AI-powered GitHub Action for Track B (Developer Productivity Tools)",
   "main": "index.js",
   "scripts": {
-    "test": "node tests/skills.test.js",
+    "test": "node --test",
     "lint": "node --check index.js skills/atlas.js skills/athena.js skills/hermes.js tests/skills.test.js"
   },
   "dependencies": {
