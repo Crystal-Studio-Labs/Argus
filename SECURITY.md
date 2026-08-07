@@ -1,8 +1,8 @@
 # 🛡️ Security Policy for ARGUS
 
-[![Security Policy](https://img.shields.io/badge/ARGUS-Security%20Policy-red)](SECURITY.md)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen)](SECURITY.md)
-[![Contact](https://img.shields.io/badge/Security%20Contact-contact%40sahooshuvranshu.is--a.dev-blue)](mailto:contact@sahooshuvranshu.is-a.dev)
+![Security Policy](https://img.shields.io/badge/SECURITY-POLICY-red?style=for-the-badge)
+![Status](https://img.shields.io/badge/STATUS-ACTIVE-brightgreen?style=for-the-badge)
+![Contact](https://img.shields.io/badge/SECURITY_CONTACT-EMAIL-blue?style=for-the-badge)
 
 ARGUS takes security seriously. As a GitHub Action executing code review pipelines and handling sensitive pull request data, we strictly enforce security guidelines and secrets protection.
 

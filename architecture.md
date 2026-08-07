@@ -1,8 +1,8 @@
 # 🏛️ ARGUS Architecture & System Specification
 
-[![ARGUS Action](https://img.shields.io/badge/ARGUS-Architecture%20Spec-purple)](file:///D:/Projects/Argus/architecture.md)
-[![Pipeline](https://img.shields.io/badge/Pipeline-3--Stage%20(Atlas%2C%20Athena%2C%20Hermes)-blue)](file:///D:/Projects/Argus/architecture.md)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-green)](https://nodejs.org/)
+![ARGUS Architecture](https://img.shields.io/badge/ARGUS-ARCHITECTURE_SPEC-purple?style=for-the-badge)
+![Pipeline](https://img.shields.io/badge/PIPELINE-3--STAGE-blue?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge)
 
 ## Technology Stack
 * **Runtime Environment**: Node.js GitHub Action (Node 20+)

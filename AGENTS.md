@@ -1,8 +1,8 @@
 # ⚖️ ARGUS Agent Constitution & Operating Rules
 
-[![Constitution](https://img.shields.io/badge/ARGUS-Agent%20Constitution-purple)](AGENTS.md)
-[![Status](https://img.shields.io/badge/Status-Ratified-brightgreen)](AGENTS.md)
-[![Governance](https://img.shields.io/badge/Governance-SpecKit%20ADLC-blue)](.specify/memory/constitution.md)
+![Constitution](https://img.shields.io/badge/CONSTITUTION-RATIFIED-purple?style=for-the-badge)
+![Status](https://img.shields.io/badge/STATUS-ACTIVE-brightgreen?style=for-the-badge)
+![Governance](https://img.shields.io/badge/GOVERNANCE-SPECKIT-blue?style=for-the-badge)
 
 # Core Principles
 

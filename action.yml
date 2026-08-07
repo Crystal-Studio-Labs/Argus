@@ -1,4 +1,4 @@
-name: 'ARGUS AI PR Reviewer'
+name: 'ARGUS'
 description: 'AI-powered GitHub Action running Atlas, Athena, and Hermes evaluation stages using any OpenAI-compatible provider (OpenAI, NVIDIA, OpenRouter, Groq, Gemini).'
 author: 'SahooShuvranshu'
 inputs:

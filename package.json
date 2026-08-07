@@ -1,7 +1,7 @@
 {
   "name": "argus",
   "version": "1.0.0",
-  "description": "ARGUS AI-powered GitHub Action for Track B (Developer Productivity Tools)",
+  "description": "ARGUS Automated AI Code Reviewer & Architecture Guardian",
   "main": "index.js",
   "scripts": {
     "test": "node --test",

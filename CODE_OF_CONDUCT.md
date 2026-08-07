@@ -1,8 +1,8 @@
 # 📜 Contributor Covenant Code of Conduct
 
-[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-v2.1-blue)](CODE_OF_CONDUCT.md)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1-green.svg)](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html)
-[![Contact](https://img.shields.io/badge/Enforcement%20Contact-contact%40sahooshuvranshu.is--a.dev-purple)](mailto:contact@sahooshuvranshu.is-a.dev)
+![Code of Conduct](https://img.shields.io/badge/CODE_OF_CONDUCT-V2.1-blue?style=for-the-badge)
+![Contributor Covenant](https://img.shields.io/badge/CONTRIBUTOR_COVENANT-V2.1-green?style=for-the-badge)
+![Enforcement](https://img.shields.io/badge/ENFORCEMENT-ACTIVE-purple?style=for-the-badge)
 
 ## Our Pledge
 

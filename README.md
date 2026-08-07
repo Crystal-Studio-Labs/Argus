@@ -1,12 +1,12 @@
-# 👁️ ARGUS — AI-Powered GitHub Action for Automated Code Reviews
+# 👁️ ARGUS — Automated AI Code Reviewer & Architecture Guardian
 
-[![CI Pipeline](https://github.com/SahooShuvranshu/Argus/actions/workflows/ci.yml/badge.svg)](https://github.com/SahooShuvranshu/Argus/actions/workflows/ci.yml)
-[![Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-ARGUS-purple?logo=github)](https://github.com/marketplace/actions/argus-ai-pr-reviewer)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-green?logo=node.js)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Track B: ADLC Hackathon](https://img.shields.io/badge/Hackathon-Track%20B%3A%20Developer%20Productivity-blue)](https://github.com/SahooShuvranshu/Argus)
+![CI Pipeline](https://img.shields.io/badge/CI_PIPELINE-PASSED-brightgreen?style=for-the-badge&logo=github-actions)
+![Marketplace](https://img.shields.io/badge/MARKETPLACE-ARGUS-purple?style=for-the-badge&logo=github)
+![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge&logo=node.js)
+![License: MIT](https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge)
+![Track B](https://img.shields.io/badge/TRACK_B-DEVELOPER_PRODUCTIVITY-blue?style=for-the-badge)
 
-> **ARGUS** is an autonomous, agentic GitHub Action built for **Track B (Developer Productivity Tools)** in the Agent-Driven Software Lifecycle (ADLC) hackathon. Operating as an automated Senior Software Architect, ARGUS executes a 3-stage review pipeline on Pull Requests to generate visual topology flowcharts, enforce architectural compliance, and catch technical debt before code merges into `main`.
+> **ARGUS** is an autonomous, agentic GitHub Action designed to streamline code reviews. Operating as an automated Senior Software Architect, ARGUS executes a 3-stage evaluation pipeline on Pull Requests to generate visual topology flowcharts, enforce architectural compliance, and catch technical debt before code merges into `main`.
 
 ---
 
@@ -38,7 +38,7 @@ flowchart TD
 | :--- | :--- | :--- |
 | **🎨 Stage 1: Atlas** | [`skills/atlas.js`](file:///D:/Projects/Argus/skills/atlas.js) | Parses PR diffs into an interactive **Mermaid.js flowchart** (`flowchart TD`) mapping changed files, modules, and control flows. |
 | **🏛️ Stage 2: Athena** | [`skills/athena.js`](file:///D:/Projects/Argus/skills/athena.js) | Cross-references code changes against [`architecture.md`](file:///D:/Projects/Argus/architecture.md) rules to prevent architectural decay and layering violations. |
-| **⚡ Stage 3: Hermes** | [`skills/hermes.js`](file:///D:/Projects/Argus/skills/hermes.js) | Scans changed files for `// TODO`, `// FIXME`, empty placeholder functions, debug logs, and hardcoded API keys/secrets with severity badges (`🔴 BLOCK`, `🟡 WARN`, `🔵 INFO`). |
+| **⚡ Stage 3: Hermes** | [`skills/hermes.js`](file:///D:/Projects/Argus/skills/hermes.js) | Scans changed files for `// TODO`, `// FIXME`, empty placeholder function stubs, debug logs, and hardcoded API keys/secrets with severity badges (`🔴 BLOCK`, `🟡 WARN`, `🔵 INFO`). |
 
 ---
 
@@ -148,6 +148,16 @@ npm test
 
 ---
 
+## 🏆 Hackathon Context & Acknowledgments
+
+This project was created for the **Do Or Redacted** Hackathon hosted by **HowToAlgo** and **GDG KIIT**.
+
+- **Hackathon**: Do Or Redacted
+- **Organizers**: HowToAlgo & GDG KIIT
+- **Track**: Track B — Developer Productivity Tools
+
+---
+
 ## 📄 Documentation & Community Policies
 
 - 📜 [**Architecture Specification**](architecture.md): Detailed tech stack, data flow, and pipeline architecture.
@@ -164,6 +174,3 @@ npm test
 For inquiries, support, or security reports, please contact:
 - **Email**: [contact@sahooshuvranshu.is-a.dev](mailto:contact@sahooshuvranshu.is-a.dev)
 - **Repository Owner**: [SahooShuvranshu](https://github.com/SahooShuvranshu)
-
----
-*Developed for Track B (Developer Productivity Tools) of the Agent-Driven Software Lifecycle Hackathon.*
