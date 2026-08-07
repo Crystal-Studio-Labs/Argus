@@ -100,47 +100,60 @@ async function run() {
     core.info('Stage 3: Executing Hermes (Technical Debt Warnings)...');
     const hermesResult = await detectTechnicalDebt(fileContentsMap, aiClient);
 
-    // 5. Build Markdown Review Comment
-    let athenaSection = `**Status:** ${athenaResult.pass ? '✅ COMPLIANT' : '⚠️ VIOLATIONS DETECTED'}\n\n${athenaResult.summary}`;
+    // 5. Build Polished Markdown Review Comment
+    const athenaStatus = athenaResult.pass ? '✅ COMPLIANT' : '⚠️ VIOLATIONS DETECTED';
+    let athenaSection = `**Status:** ${athenaStatus}\n\n${athenaResult.summary}`;
     if (athenaResult.violations && athenaResult.violations.length > 0) {
       athenaSection += '\n\n**Violations:**\n' + athenaResult.violations.map(v => `- ❌ ${v}`).join('\n');
     }
 
+    const hermesStatus = hermesResult.debtFound ? '⚠️ ISSUES FLAGGED' : '✅ CLEAN';
     let hermesSection = '';
     if (hermesResult.debtFound && hermesResult.items.length > 0) {
-      hermesSection = `⚠️ Flagged **${hermesResult.items.length}** item(s):\n\n| File | Line | Issue |\n| :--- | :--- | :--- |\n`;
+      hermesSection = `⚠️ Flagged **${hermesResult.items.length}** item(s):\n\n| Severity | File | Line | Issue |\n| :---: | :--- | :---: | :--- |\n`;
       hermesResult.items.forEach(item => {
-        hermesSection += `| \`${item.file}\` | ${item.line} | ${item.issue} |\n`;
+        const badge = item.severity === 'BLOCK' ? '🔴 BLOCK' : item.severity === 'INFO' ? '🔵 INFO' : '🟡 WARN';
+        hermesSection += `| ${badge} | \`${item.file}\` | ${item.line} | ${item.issue} |\n`;
       });
     } else {
-      hermesSection = '✅ No TODOs, FIXMEs, or empty function placeholders detected in changed files.';
+      hermesSection = '✅ No TODOs, FIXMEs, hardcoded secrets, or empty function placeholders detected.';
     }
 
     const commentMarker = '<!-- ARGUS-REVIEW-COMMENT -->';
     const commentBody = `${commentMarker}
-# 👁️ ARGUS Code Review & Compliance Report
+# 👁️ ARGUS Code Review & Executive Scorecard
 
-Thank you for your pull request! ARGUS has analyzed your changes through its 3-stage evaluation pipeline.
+Thank you for your pull request! ARGUS has completed its 3-stage automated evaluation pipeline.
+
+### 📊 Executive Summary
+| Evaluation Stage | Status | Summary |
+| :--- | :---: | :--- |
+| 🎨 **Stage 1: Atlas (Visualizer)** | ✅ RENDERED | Topology flowchart generated |
+| 🏛️ **Stage 2: Athena (Compliance)** | ${athenaStatus} | ${athenaResult.violations.length} notice(s) |
+| ⚡ **Stage 3: Hermes (Debt Scanner)** | ${hermesStatus} | ${hermesResult.items.length} item(s) flagged |
 
 ---
 
-## 🗺️ Atlas Visual Impact Map
-Below is a visual topology map of the structural changes in this PR:
+## 🎨 Stage 1: Atlas Visual Impact Map
+<details open>
+<summary><b>🔍 View Interactive Topology Flowchart</b></summary>
 
 ${atlasResult}
 
+</details>
+
 ---
 
-## 🏛️ Athena Architecture Report
+## 🏛️ Stage 2: Athena Architecture Guard
 ${athenaSection}
 
 ---
 
-## ⚡ Hermes Technical Debt Warnings
+## ⚡ Stage 3: Hermes Technical Debt & Code Scanner
 ${hermesSection}
 
 ---
-*Generated automatically by ARGUS AI-powered GitHub Action for Track B.*
+*Report generated automatically by [ARGUS AI PR Reviewer](https://github.com/SahooShuvranshu/Argus).*
 `;
 
     // 6. Post or Update PR Comment

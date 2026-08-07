@@ -18,6 +18,11 @@ async function evaluateArchitecture(diffText, architectureDocs = '', aiClient = 
 
   const violations = [];
 
+  // Static architectural guard checks
+  if (diffText.includes('diff --git a/architecture.md')) {
+    violations.push('PR modifies core architecture.md specification. Ensure architectural review is conducted.');
+  }
+
   if (aiClient) {
     const prompt = `
 You are Athena, the architecture compliance guard of ARGUS.
@@ -47,7 +52,7 @@ ${diffText}
         responseText = res.text || '';
       } else if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
         const res = await aiClient.chat.completions.create({
-          model: 'gpt-4o-mini',
+          model: 'meta/llama-3.3-70b-instruct',
           messages: [{ role: 'user', content: prompt }],
         });
         responseText = res.choices[0]?.message?.content || '';
@@ -56,10 +61,12 @@ ${diffText}
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0]);
+        const llmViolations = Array.isArray(parsed.violations) ? parsed.violations : [];
+        const combinedViolations = [...violations, ...llmViolations];
         return {
-          pass: Boolean(parsed.pass),
+          pass: parsed.pass && combinedViolations.length === 0,
           summary: parsed.summary || 'Architectural compliance check completed.',
-          violations: Array.isArray(parsed.violations) ? parsed.violations : [],
+          violations: combinedViolations,
         };
       }
     } catch (e) {
@@ -71,7 +78,7 @@ ${diffText}
     pass: violations.length === 0,
     summary: violations.length === 0
       ? 'All changes comply with defined architectural rules in architecture.md.'
-      : `Found ${violations.length} architectural violation(s).`,
+      : `Found ${violations.length} architectural notice(s).`,
     violations,
   };
 }

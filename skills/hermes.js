@@ -1,10 +1,10 @@
 /**
  * Hermes Skill
- * Scans changed files for technical debt, TODOs, FIXMEs, and empty placeholder function bodies.
+ * Advanced technical debt scanner for TODOs, FIXMEs, hardcoded secrets, console logs, and empty function stubs.
  * 
  * @param {Array<{path: string, content: string}>|Object<string, string>} fileContentsMap - File list or path->content map.
  * @param {object} [aiClient] - Optional GoogleGenAI or OpenAI client instance.
- * @returns {Promise<{ debtFound: boolean, items: Array<{ file: string, line: number, issue: string }> }>}
+ * @returns {Promise<{ debtFound: boolean, items: Array<{ file: string, line: number, issue: string, severity: 'BLOCK'|'WARN'|'INFO' }> }>}
  */
 async function detectTechnicalDebt(fileContentsMap, aiClient = null) {
   const items = [];
@@ -29,28 +29,41 @@ async function detectTechnicalDebt(fileContentsMap, aiClient = null) {
       const lineNum = index + 1;
       const trimmed = line.trim();
 
+      // 1. TODO / FIXME / HACK scanning
       if (/\/\/\s*TODO\b/i.test(trimmed) || /#\s*TODO\b/i.test(trimmed)) {
-        items.push({ file, line: lineNum, issue: `TODO flagged: "${trimmed}"` });
+        items.push({ file, line: lineNum, issue: `TODO flagged: "${trimmed}"`, severity: 'WARN' });
       }
       if (/\/\/\s*FIXME\b/i.test(trimmed) || /#\s*FIXME\b/i.test(trimmed)) {
-        items.push({ file, line: lineNum, issue: `FIXME flagged: "${trimmed}"` });
+        items.push({ file, line: lineNum, issue: `FIXME flagged: "${trimmed}"`, severity: 'BLOCK' });
       }
+
+      // 2. Unimplemented Stubs & Empty Functions
       if (/throw\s+new\s+Error\s*\(\s*['"]Not implemented['"]\s*\)/i.test(trimmed)) {
-        items.push({ file, line: lineNum, issue: 'Unimplemented method stub detected' });
+        items.push({ file, line: lineNum, issue: 'Unimplemented method stub detected', severity: 'BLOCK' });
       }
       if (/function\s+\w+\s*\([^)]*\)\s*\{\s*\}/.test(trimmed) || /\w+\s*\([^)]*\)\s*=>\s*\{\s*\}/.test(trimmed)) {
-        items.push({ file, line: lineNum, issue: 'Empty function body detected' });
+        items.push({ file, line: lineNum, issue: 'Empty function body detected', severity: 'BLOCK' });
+      }
+
+      // 3. Leftover Debug Console Logs
+      if (/console\.(log|debug)\s*\(/.test(trimmed) && !file.includes('test') && !file.includes('index.js')) {
+        items.push({ file, line: lineNum, issue: `Debug log statement: "${trimmed}"`, severity: 'INFO' });
+      }
+
+      // 4. Hardcoded Secrets Heuristics
+      if (/(api[_-]?key|secret[_-]?key|auth[_-]?token)\s*[:=]\s*['"][a-zA-Z0-9_\-]{16,}['"]/i.test(trimmed)) {
+        items.push({ file, line: lineNum, issue: 'Possible hardcoded secret or API key detected', severity: 'BLOCK' });
       }
     });
 
     if (aiClient) {
       const prompt = `
 You are Hermes, the code scanner agent of ARGUS.
-Analyze the following file for empty function stubs, placeholders, or missing docs.
+Analyze the following file for empty function stubs, placeholders, or security issues.
 
 Return a JSON array of issues:
 [
-  { "line": 12, "issue": "Description of placeholder or empty function" }
+  { "line": 12, "issue": "Description of placeholder or issue", "severity": "BLOCK" | "WARN" | "INFO" }
 ]
 If no issues exist, return [].
 
@@ -68,7 +81,7 @@ ${content}
           responseText = res.text || '';
         } else if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
           const res = await aiClient.chat.completions.create({
-            model: 'gpt-4o-mini',
+            model: 'meta/llama-3.3-70b-instruct',
             messages: [{ role: 'user', content: prompt }],
           });
           responseText = res.choices[0]?.message?.content || '';
@@ -81,7 +94,12 @@ ${content}
             parsed.forEach(item => {
               if (item.line && item.issue) {
                 if (!items.some(existing => existing.file === file && existing.line === Number(item.line))) {
-                  items.push({ file, line: Number(item.line), issue: String(item.issue) });
+                  items.push({
+                    file,
+                    line: Number(item.line),
+                    issue: String(item.issue),
+                    severity: item.severity || 'WARN',
+                  });
                 }
               }
             });
