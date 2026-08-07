@@ -1,8 +1,8 @@
 # 🏛️ ARGUS Architecture & System Specification
 
-![ARGUS Architecture](https://img.shields.io/badge/ARGUS-ARCHITECTURE_SPEC-purple?style=for-the-badge)
-![Pipeline](https://img.shields.io/badge/PIPELINE-3--STAGE-blue?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge)
+[![ARGUS Architecture](https://img.shields.io/badge/ARGUS-ARCHITECTURE_SPEC-purple?style=for-the-badge)](architecture.md)
+[![Pipeline](https://img.shields.io/badge/PIPELINE-3--STAGE-blue?style=for-the-badge)](#3-stage-evaluation-pipeline)
+[![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 
 ## Technology Stack
 * **Runtime Environment**: Node.js GitHub Action (Node 20+)

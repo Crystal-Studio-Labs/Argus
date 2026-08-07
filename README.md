@@ -1,10 +1,10 @@
 # 👁️ ARGUS — Automated AI Code Reviewer & Architecture Guardian
 
-![CI Pipeline](https://img.shields.io/badge/CI_PIPELINE-PASSED-brightgreen?style=for-the-badge&logo=github-actions)
-![Marketplace](https://img.shields.io/badge/MARKETPLACE-ARGUS-purple?style=for-the-badge&logo=github)
-![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge&logo=node.js)
-![License: MIT](https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge)
-![Track B](https://img.shields.io/badge/TRACK_B-DEVELOPER_PRODUCTIVITY-blue?style=for-the-badge)
+[![CI Pipeline](https://img.shields.io/badge/CI_PIPELINE-PASSED-brightgreen?style=for-the-badge&logo=github-actions)](https://github.com/SahooShuvranshu/Argus/actions/workflows/ci.yml)
+[![Marketplace](https://img.shields.io/badge/MARKETPLACE-ARGUS-purple?style=for-the-badge&logo=github)](https://github.com/marketplace/actions/argus)
+[![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Track B](https://img.shields.io/badge/TRACK_B-DEVELOPER_PRODUCTIVITY-blue?style=for-the-badge)](#-hackathon-context--acknowledgments)
 
 > **ARGUS** is an autonomous, agentic GitHub Action designed to streamline code reviews. Operating as an automated Senior Software Architect, ARGUS executes a 3-stage evaluation pipeline on Pull Requests to generate visual topology flowcharts, enforce architectural compliance, and catch technical debt before code merges into `main`.
 

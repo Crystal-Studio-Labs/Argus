@@ -1,8 +1,8 @@
 # 🤝 Contributing to ARGUS
 
-![Contributing Guide](https://img.shields.io/badge/CONTRIBUTING-GUIDE-brightgreen?style=for-the-badge)
-![PRs Welcome](https://img.shields.io/badge/PRS-WELCOME-blue?style=for-the-badge)
-![Community](https://img.shields.io/badge/COMMUNITY-OPEN-purple?style=for-the-badge)
+[![Contributing Guide](https://img.shields.io/badge/CONTRIBUTING-GUIDE-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRS-WELCOME-blue?style=for-the-badge)](https://github.com/SahooShuvranshu/Argus/pulls)
+[![Community](https://img.shields.io/badge/COMMUNITY-OPEN-purple?style=for-the-badge)](mailto:contact@sahooshuvranshu.is-a.dev)
 
 Thank you for your interest in contributing to **ARGUS**! We welcome contributions from developers, researchers, and open-source enthusiasts.
 

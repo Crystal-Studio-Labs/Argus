@@ -1,9 +1,9 @@
 # 🤖 ARGUS Agent & Custom Skills System
 
-![Skills System](https://img.shields.io/badge/ARGUS-SKILLS_SYSTEM-purple?style=for-the-badge)
-![Atlas](https://img.shields.io/badge/SKILL-ATLAS-blue?style=for-the-badge)
-![Athena](https://img.shields.io/badge/SKILL-ATHENA-brightgreen?style=for-the-badge)
-![Hermes](https://img.shields.io/badge/SKILL-HERMES-yellow?style=for-the-badge)
+[![Skills System](https://img.shields.io/badge/ARGUS-SKILLS_SYSTEM-purple?style=for-the-badge)](AGENTS_AND_SKILLS.md)
+[![Atlas](https://img.shields.io/badge/SKILL-ATLAS-blue?style=for-the-badge)](skills/atlas.js)
+[![Athena](https://img.shields.io/badge/SKILL-ATHENA-brightgreen?style=for-the-badge)](skills/athena.js)
+[![Hermes](https://img.shields.io/badge/SKILL-HERMES-yellow?style=for-the-badge)](skills/hermes.js)
 
 This document outlines the custom agent definition for **ARGUS** and the execution contract of its three underlying evaluation skills.
 
