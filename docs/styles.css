@@ -80,6 +80,58 @@ code, pre, .font-mono {
   overflow-wrap: anywhere;
 }
 
+/* Custom Industrial Brutalist Scrollbars */
+.terminal-body::-webkit-scrollbar,
+.argus-output-box::-webkit-scrollbar,
+.diff-textarea::-webkit-scrollbar,
+.quickstart-box pre::-webkit-scrollbar,
+.code-preview-box::-webkit-scrollbar,
+.code-block-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track,
+.argus-output-box::-webkit-scrollbar-track,
+.diff-textarea::-webkit-scrollbar-track,
+.quickstart-box pre::-webkit-scrollbar-track,
+.code-preview-box::-webkit-scrollbar-track,
+.code-block-wrapper::-webkit-scrollbar-track {
+  background: #090D16;
+  border-left: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.terminal-body::-webkit-scrollbar-thumb,
+.argus-output-box::-webkit-scrollbar-thumb,
+.diff-textarea::-webkit-scrollbar-thumb,
+.quickstart-box pre::-webkit-scrollbar-thumb,
+.code-preview-box::-webkit-scrollbar-thumb,
+.code-block-wrapper::-webkit-scrollbar-thumb {
+  background: var(--argus-purple);
+  border-radius: 2px;
+  border: 1px solid #000000;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover,
+.argus-output-box::-webkit-scrollbar-thumb:hover,
+.diff-textarea::-webkit-scrollbar-thumb:hover,
+.quickstart-box pre::-webkit-scrollbar-thumb:hover,
+.code-preview-box::-webkit-scrollbar-thumb:hover,
+.code-block-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--argus-purple-glow);
+}
+
+/* Firefox Standard Scrollbar Properties */
+.terminal-body,
+.argus-output-box,
+.diff-textarea,
+.quickstart-box pre,
+.code-preview-box,
+.code-block-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--argus-purple) #090D16;
+}
+
 /* Navbar */
 .navbar {
   background: var(--card-bg);
