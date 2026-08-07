@@ -129,8 +129,8 @@ index 9b4795d..bf71fd5 100644
 --- a/src/demoService.js
 +++ b/src/demoService.js
 @@ -10,6 +10,8 @@ function processPayment(amount) {
-+  // TODO: Implement actual Stripe gateway connection later
-+  const apiKey = "sk_live_99481817161515151";
++  // TODO: Implement actual Payment gateway connection later
++  const apiKey = "DUMMY_MOCK_SECRET_KEY_12345";
    console.log("Processing amount:", amount);
    return true;
  }`,
