@@ -41,4 +41,5 @@ jobs:
           test -f .env.example
           test -f .gitignore
           test -f tests/skills.test.js
+          test -f .github/workflows/argus.yml
           echo "Structure verification passed!"
