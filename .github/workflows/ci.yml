@@ -40,4 +40,5 @@ jobs:
           test -f skills/hermes.js
           test -f .env.example
           test -f .gitignore
+          test -f tests/skills.test.js
           echo "Structure verification passed!"

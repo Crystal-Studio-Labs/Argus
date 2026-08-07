@@ -1,93 +1,103 @@
 /**
  * Hermes Skill
- * Scans changed files for unresolved TODOs, FIXMEs, and empty placeholder functions.
+ * Scans changed files for technical debt, TODOs, FIXMEs, and empty placeholder function bodies.
  * 
- * @param {Array<{path: string, content: string}>} changedFiles - List of changed file paths and their contents.
- * @param {object} ai - The GoogleGenAI client instance.
- * @returns {Promise<string>} Report listing any stubs, placeholders, or TODOs.
+ * @param {Array<{path: string, content: string}>|Object<string, string>} fileContentsMap - File list or path->content map.
+ * @param {object} [aiClient] - Optional GoogleGenAI or OpenAI client instance.
+ * @returns {Promise<{ debtFound: boolean, items: Array<{ file: string, line: number, issue: string }> }>}
  */
-async function scanFiles(changedFiles, ai) {
-  if (!changedFiles || changedFiles.length === 0) {
-    return 'No changed files to scan for placeholders or TODOs.';
+async function detectTechnicalDebt(fileContentsMap, aiClient = null) {
+  const items = [];
+
+  // Normalize input into an array of { file, content }
+  let filesList = [];
+  if (Array.isArray(fileContentsMap)) {
+    filesList = fileContentsMap.map(f => ({ file: f.path || f.file, content: f.content || '' }));
+  } else if (fileContentsMap && typeof fileContentsMap === 'object') {
+    filesList = Object.entries(fileContentsMap).map(([file, content]) => ({ file, content }));
   }
 
-  let report = '### Hermes Scan Report\n\n';
-  let issueCount = 0;
+  if (filesList.length === 0) {
+    return { debtFound: false, items: [] };
+  }
 
-  for (const file of changedFiles) {
-    const lines = file.content.split('\n');
-    const todos = [];
-    const fixmes = [];
+  for (const { file, content } of filesList) {
+    if (!content || typeof content !== 'string') continue;
+    const lines = content.split('\n');
 
-    // Static Scan
     lines.forEach((line, index) => {
-      if (/\/\/\s*TODO\b/i.test(line)) {
-        todos.push({ line: index + 1, text: line.trim() });
+      const lineNum = index + 1;
+      const trimmed = line.trim();
+
+      if (/\/\/\s*TODO\b/i.test(trimmed) || /#\s*TODO\b/i.test(trimmed)) {
+        items.push({ file, line: lineNum, issue: `TODO flagged: "${trimmed}"` });
       }
-      if (/\/\/\s*FIXME\b/i.test(line)) {
-        fixmes.push({ line: index + 1, text: line.trim() });
+      if (/\/\/\s*FIXME\b/i.test(trimmed) || /#\s*FIXME\b/i.test(trimmed)) {
+        items.push({ file, line: lineNum, issue: `FIXME flagged: "${trimmed}"` });
+      }
+      if (/throw\s+new\s+Error\s*\(\s*['"]Not implemented['"]\s*\)/i.test(trimmed)) {
+        items.push({ file, line: lineNum, issue: 'Unimplemented method stub detected' });
+      }
+      if (/function\s+\w+\s*\([^)]*\)\s*\{\s*\}/.test(trimmed) || /\w+\s*\([^)]*\)\s*=>\s*\{\s*\}/.test(trimmed)) {
+        items.push({ file, line: lineNum, issue: 'Empty function body detected' });
       }
     });
 
-    // LLM scan for placeholder functions in the file
-    const prompt = `
+    if (aiClient) {
+      const prompt = `
 You are Hermes, the code scanner agent of ARGUS.
-Analyze the following file content and search for:
-1. Empty function bodies (e.g., function definitions with no implementation or only comments/placeholders inside).
-2. Placeholder/stub statements (e.g., throwing "Not implemented" or "Write code here").
+Analyze the following file for empty function stubs, placeholders, or missing docs.
 
-List any such occurrences with approximate line numbers or function names. If none exist, output "NO PLACEHOLDERS".
+Return a JSON array of issues:
+[
+  { "line": 12, "issue": "Description of placeholder or empty function" }
+]
+If no issues exist, return [].
 
-File Path: ${file.path}
+File: ${file}
 Content:
-\`\`\`
-${file.content}
-\`\`\`
+${content}
 `;
+      try {
+        let responseText = '';
+        if (aiClient.models && typeof aiClient.models.generateContent === 'function') {
+          const res = await aiClient.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+          });
+          responseText = res.text || '';
+        } else if (aiClient.chat && aiClient.chat.completions && typeof aiClient.chat.completions.create === 'function') {
+          const res = await aiClient.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [{ role: 'user', content: prompt }],
+          });
+          responseText = res.choices[0]?.message?.content || '';
+        }
 
-    let placeholdersText = 'None';
-    try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-      });
-      const responseText = response.text || '';
-      if (!responseText.includes('NO PLACEHOLDERS')) {
-        placeholdersText = responseText.trim();
+        const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          if (Array.isArray(parsed)) {
+            parsed.forEach(item => {
+              if (item.line && item.issue) {
+                if (!items.some(existing => existing.file === file && existing.line === Number(item.line))) {
+                  items.push({ file, line: Number(item.line), issue: String(item.issue) });
+                }
+              }
+            });
+          }
+        }
+      } catch (e) {
+        // Ignore LLM errors and rely on static scan items
       }
-    } catch (e) {
-      placeholdersText = `Error scanning file: ${e.message}`;
-    }
-
-    if (todos.length > 0 || fixmes.length > 0 || placeholdersText !== 'None') {
-      issueCount++;
-      report += `#### 📄 File: \`${file.path}\`\n`;
-      if (todos.length > 0) {
-        report += `**TODOs found:**\n`;
-        todos.forEach(t => {
-          report += `- Line ${t.line}: \`${t.text}\`\n`;
-        });
-      }
-      if (fixmes.length > 0) {
-        report += `**FIXMEs found:**\n`;
-        fixmes.forEach(f => {
-          report += `- Line ${f.line}: \`${f.text}\`\n`;
-        });
-      }
-      if (placeholdersText !== 'None') {
-        report += `**Placeholder/Stub analysis:**\n${placeholdersText}\n`;
-      }
-      report += `\n`;
     }
   }
 
-  if (issueCount === 0) {
-    report += '✅ No TODOs, FIXMEs, or empty placeholder functions detected in changed files.';
-  } else {
-    report += `⚠️ Found issues in ${issueCount} file(s). Please resolve them before merging.`;
-  }
-
-  return report;
+  return {
+    debtFound: items.length > 0,
+    items,
+  };
 }
 
-module.exports = scanFiles;
+module.exports = detectTechnicalDebt;
+module.exports.detectTechnicalDebt = detectTechnicalDebt;

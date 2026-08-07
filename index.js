@@ -3,18 +3,18 @@ const path = require('path');
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { GoogleGenAI } = require('@google/genai');
+const OpenAI = require('openai');
 
-const generateMermaidDiagram = require('./skills/atlas');
-const checkCompliance = require('./skills/athena');
-const scanFiles = require('./skills/hermes');
+const generateTopologyMap = require('./skills/atlas');
+const evaluateArchitecture = require('./skills/athena');
+const detectTechnicalDebt = require('./skills/hermes');
 
 async function run() {
   try {
-    // 1. Get Inputs
     const token = core.getInput('github-token', { required: true });
-    const geminiApiKey = core.getInput('gemini-api-key', { required: true });
+    const geminiApiKey = core.getInput('gemini-api-key') || process.env.GEMINI_API_KEY;
+    const nvidiaApiKey = core.getInput('nvidia-api-key') || process.env.NVIDIA_API_KEY;
 
-    // 2. Validate Event
     const context = github.context;
     if (context.eventName !== 'pull_request') {
       core.setFailed('ARGUS Action can only run on pull_request events.');
@@ -26,32 +26,43 @@ async function run() {
     const owner = context.repo.owner;
     const repo = context.repo.repo;
 
-    core.info(`Starting ARGUS review for PR #${pullNumber} in ${owner}/${repo}`);
+    core.info(`Starting ARGUS code review for PR #${pullNumber} in ${owner}/${repo}`);
 
-    // 3. Initialize Clients
     const octokit = github.getOctokit(token);
-    const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
-    // 4. Fetch Git Diff from GitHub API
+    // Initialize AI client
+    let aiClient = null;
+    if (geminiApiKey) {
+      aiClient = new GoogleGenAI({ apiKey: geminiApiKey });
+      core.info('Initialized Google Gemini AI client.');
+    } else if (nvidiaApiKey) {
+      aiClient = new OpenAI({
+        apiKey: nvidiaApiKey,
+        baseURL: 'https://integrate.api.nvidia.com/v1',
+      });
+      core.info('Initialized NVIDIA OpenAI-compatible client.');
+    } else {
+      core.warning('No GEMINI_API_KEY or NVIDIA_API_KEY provided. ARGUS will operate using fallback static analysis rules.');
+    }
+
+    // 1. Fetch Git Diff
     core.info('Fetching PR git diff...');
-    let diffString = '';
+    let diffText = '';
     try {
       const { data: diffData } = await octokit.rest.pulls.get({
         owner,
         repo,
         pull_number: pullNumber,
-        headers: {
-          accept: 'application/vnd.github.v3.diff',
-        },
+        headers: { accept: 'application/vnd.github.v3.diff' },
       });
-      diffString = diffData;
-    } catch (diffError) {
-      core.warning(`Failed to fetch diff from API: ${diffError.message}. Using fallback empty diff.`);
+      diffText = typeof diffData === 'string' ? diffData : '';
+    } catch (e) {
+      core.warning(`Could not fetch git diff: ${e.message}`);
     }
 
-    // 5. Get Changed Files list and contents
+    // 2. Fetch Changed Files Content
     core.info('Fetching changed files list...');
-    const changedFiles = [];
+    const fileContentsMap = [];
     try {
       const { data: files } = await octokit.rest.pulls.listFiles({
         owner,
@@ -60,107 +71,111 @@ async function run() {
       });
 
       for (const file of files) {
-        // Only scan existing files that are modified or added
         if (file.status === 'modified' || file.status === 'added') {
           const localPath = path.join(process.env.GITHUB_WORKSPACE || '.', file.filename);
           if (fs.existsSync(localPath)) {
             const content = fs.readFileSync(localPath, 'utf-8');
-            changedFiles.push({
-              path: file.filename,
-              content,
-            });
+            fileContentsMap.push({ path: file.filename, content });
           }
         }
       }
-    } catch (filesError) {
-      core.warning(`Error listing or reading changed files: ${filesError.message}`);
+    } catch (e) {
+      core.warning(`Could not read changed files: ${e.message}`);
     }
 
-    // 6. Read architecture.md for Athena Compliance Guard
+    // 3. Read architecture.md
     let architectureDocs = '';
     const archPath = path.join(process.env.GITHUB_WORKSPACE || '.', 'architecture.md');
     if (fs.existsSync(archPath)) {
       architectureDocs = fs.readFileSync(archPath, 'utf-8');
+    }
+
+    // 4. Run Skills Sequentially
+    core.info('Stage 1: Executing Atlas (Visual Impact Map)...');
+    const atlasResult = await generateTopologyMap(diffText, aiClient);
+
+    core.info('Stage 2: Executing Athena (Architecture Report)...');
+    const athenaResult = await evaluateArchitecture(diffText, architectureDocs, aiClient);
+
+    core.info('Stage 3: Executing Hermes (Technical Debt Warnings)...');
+    const hermesResult = await detectTechnicalDebt(fileContentsMap, aiClient);
+
+    // 5. Build Markdown Review Comment
+    let athenaSection = `**Status:** ${athenaResult.pass ? '✅ COMPLIANT' : '⚠️ VIOLATIONS DETECTED'}\n\n${athenaResult.summary}`;
+    if (athenaResult.violations && athenaResult.violations.length > 0) {
+      athenaSection += '\n\n**Violations:**\n' + athenaResult.violations.map(v => `- ❌ ${v}`).join('\n');
+    }
+
+    let hermesSection = '';
+    if (hermesResult.debtFound && hermesResult.items.length > 0) {
+      hermesSection = `⚠️ Flagged **${hermesResult.items.length}** item(s):\n\n| File | Line | Issue |\n| :--- | :--- | :--- |\n`;
+      hermesResult.items.forEach(item => {
+        hermesSection += `| \`${item.file}\` | ${item.line} | ${item.issue} |\n`;
+      });
     } else {
-      core.warning('architecture.md not found in workspace. Athena will run without architecture context.');
+      hermesSection = '✅ No TODOs, FIXMEs, or empty function placeholders detected in changed files.';
     }
 
-    // 7. Execute 3-Stage Evaluation Pipeline Sequentially
-    core.info('Executing Stage 1: Atlas (Visualizer)...');
-    let atlasOutput = '';
-    try {
-      atlasOutput = await generateMermaidDiagram(diffString, ai);
-    } catch (e) {
-      core.error(`Atlas execution failed: ${e.message}`);
-      atlasOutput = `*Atlas execution failed: ${e.message}*`;
-    }
-
-    core.info('Executing Stage 2: Athena (Compliance Guard)...');
-    let athenaOutput = '';
-    try {
-      athenaOutput = await checkCompliance(diffString, architectureDocs, ai);
-    } catch (e) {
-      core.error(`Athena execution failed: ${e.message}`);
-      athenaOutput = `*Athena execution failed: ${e.message}*`;
-    }
-
-    core.info('Executing Stage 3: Hermes (Unfinished Code Scanner)...');
-    let hermesOutput = '';
-    try {
-      hermesOutput = await scanFiles(changedFiles, ai);
-    } catch (e) {
-      core.error(`Hermes execution failed: ${e.message}`);
-      hermesOutput = `*Hermes execution failed: ${e.message}*`;
-    }
-
-    // 8. Assemble single Markdown review comment
-    const commentBody = `
+    const commentMarker = '<!-- ARGUS-REVIEW-COMMENT -->';
+    const commentBody = `${commentMarker}
 # 👁️ ARGUS Code Review & Compliance Report
 
-Thank you for your pull request! ARGUS has completed its sequential 3-stage evaluation pipeline.
+Thank you for your pull request! ARGUS has analyzed your changes through its 3-stage evaluation pipeline.
 
 ---
 
-## 🎨 Stage 1: Atlas Visual Flow
-Below is a visual diagram of the changed paths/logic in this PR:
+## 🗺️ Atlas Visual Impact Map
+Below is a visual topology map of the structural changes in this PR:
 
-${atlasOutput}
-
----
-
-## 🏛️ Stage 2: Athena Compliance Guard
-Here is the architectural verification against \`architecture.md\`:
-
-${athenaOutput}
+${atlasResult}
 
 ---
 
-## ✉️ Stage 3: Hermes Code Scanner
-Here is the scan report for TODOs, FIXMEs, and empty placeholder functions:
-
-${hermesOutput}
+## 🏛️ Athena Architecture Report
+${athenaSection}
 
 ---
-*Report generated automatically by ARGUS AI-powered GitHub Action for Track B.*
+
+## ⚡ Hermes Technical Debt Warnings
+${hermesSection}
+
+---
+*Generated automatically by ARGUS AI-powered GitHub Action for Track B.*
 `;
 
-    // 9. Post comment to Pull Request
-    core.info('Posting combined review comment to PR...');
-    await octokit.rest.issues.createComment({
+    // 6. Post or Update PR Comment
+    core.info('Posting/updating review comment on PR...');
+    const { data: comments } = await octokit.rest.issues.listComments({
       owner,
       repo,
       issue_number: pullNumber,
-      body: commentBody.trim(),
     });
 
-    core.info('ARGUS review comment posted successfully.');
+    const existingComment = comments.find(c => c.body && c.body.includes(commentMarker));
+
+    if (existingComment) {
+      await octokit.rest.issues.updateComment({
+        owner,
+        repo,
+        comment_id: existingComment.id,
+        body: commentBody.trim(),
+      });
+      core.info(`Updated existing ARGUS review comment (ID: ${existingComment.id}).`);
+    } else {
+      await octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: pullNumber,
+        body: commentBody.trim(),
+      });
+      core.info('Created new ARGUS review comment.');
+    }
 
   } catch (error) {
     core.setFailed(`ARGUS Action execution failed: ${error.message}`);
   }
 }
 
-// Only execute run if this is the main entry point (avoid running on import during tests)
 if (require.main === module) {
   run();
 }
