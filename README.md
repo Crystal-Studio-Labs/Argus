@@ -203,11 +203,12 @@ npm test
 
 ## 🏆 Hackathon Context & Acknowledgments
 
-This project was created for the **Do Or Redacted** Hackathon hosted by **HowToAlgo** and **GDG KIIT**.
+This project was created for the **[Deploy Or [Redacted]](https://dor.gdgkiit.in/)** Hackathon hosted by **HowToAlgo** and **GDG KIIT**.
 
-- **Hackathon**: Do Or Redacted
+- **Hackathon**: [Deploy Or [Redacted]](https://dor.gdgkiit.in/)
+- **GDG Event Page**: [GDG KIIT Event Details](https://gdg.community.dev/events/details/google-gdg-on-campus-kalinga-institute-of-industrial-technology-bhubaneswar-india-presents-deploy-or-redacted/)
 - **Organizers**: HowToAlgo & GDG KIIT
-- **Track**: Track B — Developer Productivity Tools
+- **Track**: Developer Productivity Tools
 
 ---
 
