@@ -1,3 +1,9 @@
+# ⚖️ ARGUS Agent Constitution & Operating Rules
+
+[![Constitution](https://img.shields.io/badge/ARGUS-Agent%20Constitution-purple)](AGENTS.md)
+[![Status](https://img.shields.io/badge/Status-Ratified-brightgreen)](AGENTS.md)
+[![Governance](https://img.shields.io/badge/Governance-SpecKit%20ADLC-blue)](.specify/memory/constitution.md)
+
 # Core Principles
 
 1. **Precision & Objectivity**: Reviews must focus strictly on the actual changes in the pull request. Avoid generic recommendations; give precise, actionable feedback.

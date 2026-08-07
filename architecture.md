@@ -1,4 +1,8 @@
-# ARGUS Architecture & System Specification
+# 🏛️ ARGUS Architecture & System Specification
+
+[![ARGUS Action](https://img.shields.io/badge/ARGUS-Architecture%20Spec-purple)](file:///D:/Projects/Argus/architecture.md)
+[![Pipeline](https://img.shields.io/badge/Pipeline-3--Stage%20(Atlas%2C%20Athena%2C%20Hermes)-blue)](file:///D:/Projects/Argus/architecture.md)
+[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-green)](https://nodejs.org/)
 
 ## Technology Stack
 * **Runtime Environment**: Node.js GitHub Action (Node 20+)
@@ -7,7 +11,7 @@
   - **NVIDIA NIM**: `https://integrate.api.nvidia.com/v1` (models: `meta/llama-3.3-70b-instruct`)
   - **OpenRouter**: `https://openrouter.ai/api/v1` (models: `google/gemini-2.0-flash-001`, `deepseek/deepseek-r1`)
   - **Groq**: `https://api.groq.com/openai/v1` (models: `llama-3.3-70b-versatile`)
-  - **Google Gemini**: Native `@google/genai` SDK / OpenAI compatibility endpoint
+  - **Google Gemini**: Native `@google/genai` SDK / OpenAI Endpoint
 * **Workflow Automation**: `@actions/core`, `@actions/github`
 
 ## 3-Stage Evaluation Pipeline

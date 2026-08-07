@@ -42,4 +42,7 @@ jobs:
           test -f .gitignore
           test -f tests/skills.test.js
           test -f .github/workflows/argus.yml
+          test -f SECURITY.md
+          test -f CODE_OF_CONDUCT.md
+          test -f CONTRIBUTING.md
           echo "Structure verification passed!"
