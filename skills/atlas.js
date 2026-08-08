@@ -28,11 +28,17 @@ async function generateTopologyMap(diffText, aiClient = null, modelName = null) 
 
   const prompt = `
 You are Atlas, the system visualizer agent of ARGUS.
-Analyze the following git diff and convert it into a Mermaid.js flowchart diagram.
+Analyze the following git diff and convert it into a clean, valid Mermaid.js flowchart diagram.
 Map changed components, modified files, structural dependency changes, or function control flows.
 
+CRITICAL MERMAID SYNTAX RULES:
+1. Always wrap ALL node labels in double quotes inside square brackets: e.g. NodeA["public/app.js"], NodeB["GET /api/dashboard/status"].
+2. Never use unquoted slashes (/), parentheses, or special characters in node definitions (e.g. NEVER write B[/path] or C(fn())).
+3. Use simple alphanumeric IDs for nodes (A, B, C, Node1, Node2).
+4. Arrow syntax must be strictly \`-->\` or \`-->|label|\`.
+5. Ensure the diagram begins with \`flowchart TD\`.
+
 Output ONLY the Mermaid.js code block wrapped in \`\`\`mermaid and \`\`\`.
-Ensure the diagram syntax begins with \`flowchart TD\`.
 
 Git Diff:
 ${diffText}
@@ -60,6 +66,9 @@ ${diffText}
     if (!diagramContent.startsWith('flowchart') && !diagramContent.startsWith('graph')) {
       diagramContent = `flowchart TD\n${diagramContent}`;
     }
+
+    // Post-process: sanitize unquoted slash shapes like B[/path] -> B["/path"]
+    diagramContent = diagramContent.replace(/([A-Za-z0-9_]+)\[\/(.*?)\]/g, '$1["/$2"]');
     return `\`\`\`mermaid\n${diagramContent}\n\`\`\``;
   } catch (error) {
     console.warn(`[Atlas] AI generation encountered error (falling back to static topology): ${error.message}`);
