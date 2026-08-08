@@ -32,8 +32,25 @@ inputs:
     required: false
     default: 'gemini-2.0-flash'
 runs:
-  using: 'node20'
-  main: 'index.js'
+  using: 'composite'
+  steps:
+    - name: Install Action Dependencies
+      shell: bash
+      run: cd "${{ github.action_path }}" && npm ci --omit=dev
+
+    - name: Run ARGUS AI Reviewer
+      shell: bash
+      run: node "${{ github.action_path }}/index.js"
+      env:
+        INPUT_GITHUB-TOKEN: ${{ inputs.github-token }}
+        INPUT_API-KEY: ${{ inputs.api-key }}
+        INPUT_GEMINI-API-KEY: ${{ inputs.gemini-api-key }}
+        INPUT_OPENAI-API-KEY: ${{ inputs.openai-api-key }}
+        INPUT_NVIDIA-API-KEY: ${{ inputs.nvidia-api-key }}
+        INPUT_OPENROUTER-API-KEY: ${{ inputs.openrouter-api-key }}
+        INPUT_GROQ-API-KEY: ${{ inputs.groq-api-key }}
+        INPUT_BASE-URL: ${{ inputs.base-url }}
+        INPUT_MODEL: ${{ inputs.model }}
 branding:
   icon: 'eye'
   color: 'purple'
