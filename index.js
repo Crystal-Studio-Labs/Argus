@@ -9,6 +9,32 @@ const generateTopologyMap = require('./skills/atlas');
 const evaluateArchitecture = require('./skills/athena');
 const detectTechnicalDebt = require('./skills/hermes');
 
+function isIgnoredFile(filepath) {
+  if (!filepath || typeof filepath !== 'string') return true;
+  const ignoredPatterns = [
+    /package-lock\.json$/, /yarn\.lock$/, /pnpm-lock\.yaml$/,
+    /\.min\.js$/, /\.map$/, /^dist\//, /^build\//, /node_modules\//
+  ];
+  return ignoredPatterns.some(pattern => pattern.test(filepath));
+}
+
+function filterDiffNoise(rawDiff) {
+  if (!rawDiff || typeof rawDiff !== 'string') return '';
+  const diffSections = rawDiff.split(/(?=diff --git )/);
+  const filtered = diffSections.filter(section => {
+    const headerMatch = section.match(/diff --git a\/(.+?) b\/(.+?)/);
+    if (!headerMatch) return true;
+    return !isIgnoredFile(headerMatch[2]);
+  });
+  return filtered.join('');
+}
+
+function truncateDiff(diffText, maxChars = 80000) {
+  if (!diffText || typeof diffText !== 'string') return '';
+  if (diffText.length <= maxChars) return diffText;
+  return diffText.slice(0, maxChars) + '\n\n[...Git diff truncated for optimal performance...]';
+}
+
 async function run() {
   try {
     const token = core.getInput('github-token', { required: true });
@@ -27,18 +53,24 @@ async function run() {
       || process.env.OPENROUTER_API_KEY
       || process.env.GROQ_API_KEY;
 
-    let baseURL = core.getInput('base-url') || process.env.OPENAI_BASE_URL || process.env.AI_BASE_URL;
-    let modelName = core.getInput('model') || process.env.GEMINI_MODEL || process.env.OPENAI_MODEL || process.env.AI_MODEL || 'gemini-2.0-flash';
+    const userBaseURL = core.getInput('base-url') || process.env.OPENAI_BASE_URL || process.env.AI_BASE_URL;
+    const userModel = core.getInput('model') || process.env.GEMINI_MODEL || process.env.OPENAI_MODEL || process.env.AI_MODEL;
+    const hasCustomModel = userModel && userModel !== 'gemini-2.0-flash';
+    const hasCustomBaseURL = Boolean(userBaseURL);
 
-    // Smart provider detection defaults
-    if (apiKey && apiKey.startsWith('nvapi-') && (!baseURL || baseURL.includes('openai.com'))) {
-      baseURL = 'https://integrate.api.nvidia.com/v1';
-      modelName = 'meta/llama-3.3-70b-instruct';
-    }
+    let baseURL = userBaseURL;
+    let modelName = userModel || 'gemini-2.0-flash';
 
-    if (apiKey && apiKey.startsWith('sk-or-') && (!baseURL || baseURL.includes('openai.com'))) {
-      baseURL = 'https://openrouter.ai/api/v1';
-      modelName = 'google/gemini-2.0-flash-001';
+    // Hybrid provider detection defaults (Explicit user overrides priority > Key prefix fallbacks)
+    if (apiKey && apiKey.startsWith('gsk_')) {
+      baseURL = hasCustomBaseURL ? userBaseURL : 'https://api.groq.com/openai/v1';
+      modelName = hasCustomModel ? userModel : 'llama-3.3-70b-versatile';
+    } else if (apiKey && apiKey.startsWith('nvapi-')) {
+      baseURL = hasCustomBaseURL ? userBaseURL : 'https://integrate.api.nvidia.com/v1';
+      modelName = hasCustomModel ? userModel : 'meta/llama-3.3-70b-instruct';
+    } else if (apiKey && apiKey.startsWith('sk-or-')) {
+      baseURL = hasCustomBaseURL ? userBaseURL : 'https://openrouter.ai/api/v1';
+      modelName = hasCustomModel ? userModel : 'google/gemini-2.0-flash-001';
     }
 
     let aiClient = null;
@@ -54,6 +86,7 @@ async function run() {
         aiClient = new OpenAI({
           apiKey,
           baseURL: finalBaseURL,
+          maxRetries: 2,
         });
         aiClient.defaultModel = modelName || 'gpt-4o-mini';
         core.info(`Initialized Universal OpenAI-compatible AI client (BaseURL: ${finalBaseURL}, Model: ${aiClient.defaultModel})`);
@@ -87,7 +120,8 @@ async function run() {
         pull_number: pullNumber,
         headers: { accept: 'application/vnd.github.v3.diff' },
       });
-      diffText = typeof diffData === 'string' ? diffData : '';
+      const rawDiff = typeof diffData === 'string' ? diffData : '';
+      diffText = truncateDiff(filterDiffNoise(rawDiff));
     } catch (e) {
       core.warning(`Could not fetch git diff: ${e.message}`);
     }
@@ -103,7 +137,7 @@ async function run() {
       });
 
       for (const file of files) {
-        if (file.status === 'modified' || file.status === 'added') {
+        if ((file.status === 'modified' || file.status === 'added') && !isIgnoredFile(file.filename)) {
           const localPath = path.join(process.env.GITHUB_WORKSPACE || '.', file.filename);
           if (fs.existsSync(localPath)) {
             const content = fs.readFileSync(localPath, 'utf-8');

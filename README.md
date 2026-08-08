@@ -248,6 +248,14 @@ This project was created for the **[Deploy Or [Redacted]](https://dor.gdgkiit.in
 - **Organizers**: HowToAlgo & GDG KIIT
 - **Track**: Developer Productivity Tools
 
+## 💡 AI Provider Rate Limits & Plan Guidance
+
+ARGUS supports native Google Gemini along with any OpenAI-compatible provider (Groq, NVIDIA NIM, OpenRouter, OpenAI Direct):
+
+- **Free Tier API Keys**: Free tier keys (e.g., Google Gemini Free Tier with 15 Requests/Min) may encounter rate limit pauses (`HTTP 429`) during rapid PR commits.
+- **Paid / Pro / Subscription Plans**: Paid API keys or higher-tier subscription plans (Groq Cloud, NVIDIA NIM, OpenAI Pro, Gemini Pay-As-You-Go) operate with high/unlimited rate limits and zero pauses.
+- **Zero CI Break Guarantee**: If rate limits occur on Free Tier keys, ARGUS's built-in **Fallback Static Analysis Engine** automatically completes the PR evaluation using offline static regex parsing without breaking your CI pipeline.
+
 ---
 
 ## 📄 Documentation & Community Policies
