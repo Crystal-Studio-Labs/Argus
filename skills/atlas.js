@@ -62,7 +62,17 @@ ${diffText}
     }
     return `\`\`\`mermaid\n${diagramContent}\n\`\`\``;
   } catch (error) {
-    return `\`\`\`mermaid\nflowchart TD\n    Error["Atlas error: ${error.message.replace(/"/g, "'")}"]\n\`\`\``;
+    // Fall back cleanly to static topology diagram on rate limit or API error
+    const fileMatches = [...diffText.matchAll(/diff --git a\/(.+?) b\/(.+?)/g)];
+    if (fileMatches.length === 0) {
+      return '```mermaid\nflowchart TD\n    PR["Pull Request"] --> Diff["Modified Files"]\n```';
+    }
+    let diagram = '```mermaid\nflowchart TD\n';
+    fileMatches.forEach((m, idx) => {
+      diagram += `    Node${idx}["📄 ${m[2]}"]\n`;
+    });
+    diagram += '```';
+    return diagram;
   }
 }
 
