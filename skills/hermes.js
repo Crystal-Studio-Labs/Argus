@@ -108,6 +108,7 @@ ${content}
           }
         }
       } catch (e) {
+        console.warn(`[Hermes] AI generation encountered error for ${file} (relying on static scanner): ${e.message}`);
         // Ignore LLM errors and rely on static scan items
       }
     }

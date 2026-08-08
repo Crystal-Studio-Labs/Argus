@@ -72,6 +72,7 @@ ${diffText}
         };
       }
     } catch (e) {
+      console.warn(`[Athena] AI generation encountered error (falling back to static compliance): ${e.message}`);
       // Fall back to static evaluation
     }
   }

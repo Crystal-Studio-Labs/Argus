@@ -62,6 +62,7 @@ ${diffText}
     }
     return `\`\`\`mermaid\n${diagramContent}\n\`\`\``;
   } catch (error) {
+    console.warn(`[Atlas] AI generation encountered error (falling back to static topology): ${error.message}`);
     // Fall back cleanly to static topology diagram on rate limit or API error
     const fileMatches = [...diffText.matchAll(/diff --git a\/(\S+) b\/(\S+)/g)];
     if (fileMatches.length === 0) {
