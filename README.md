@@ -239,40 +239,10 @@ npm test
 
 ---
 
-## 🏆 Hackathon Context & Acknowledgments
-
-This project was created for the **[Deploy Or [Redacted]](https://dor.gdgkiit.in/)** Hackathon hosted by **HowToAlgo** and **GDG KIIT**.
-
-- **Hackathon**: [Deploy Or [Redacted]](https://dor.gdgkiit.in/)
-- **GDG Event Page**: [GDG KIIT Event Details](https://gdg.community.dev/events/details/google-gdg-on-campus-kalinga-institute-of-industrial-technology-bhubaneswar-india-presents-deploy-or-redacted/)
-- **Organizers**: HowToAlgo & GDG KIIT
-- **Track**: Developer Productivity Tools
-
-## 💡 AI Provider Rate Limits & Plan Guidance
-
-ARGUS supports native Google Gemini along with any OpenAI-compatible provider (Groq, NVIDIA NIM, OpenRouter, OpenAI Direct):
-
-- **Free Tier API Keys**: Free tier keys (e.g., Google Gemini Free Tier with 15 Requests/Min) may encounter rate limit pauses (`HTTP 429`) during rapid PR commits.
-- **Paid / Pro / Subscription Plans**: Paid API keys or higher-tier subscription plans (Groq Cloud, NVIDIA NIM, OpenAI Pro, Gemini Pay-As-You-Go) operate with high/unlimited rate limits and zero pauses.
-- **Zero CI Break Guarantee**: If rate limits occur on Free Tier keys, ARGUS's built-in **Fallback Static Analysis Engine** automatically completes the PR evaluation using offline static regex parsing without breaking your CI pipeline.
-
----
-
-## 📄 Documentation & Community Policies
-
-- 📜 [**Architecture Specification**](architecture.md): Detailed tech stack, data flow, and pipeline architecture.
-- ⚖️ [**Agent Constitution**](AGENTS.md): Core operating principles, constraints, and rule matrix (`ARGUS-01`, `ARGUS-02`, `ARGUS-03`).
-- 🤖 [**Custom Agent & Skills System**](AGENTS_AND_SKILLS.md): Skill interface definitions for Atlas, Athena, and Hermes with mythological origins.
-- 🌐 [**Live Showcase Site**](https://sahooshuvranshu.github.io/Argus/): Interactive landing page and PR evaluation sandbox.
-- 📖 [**Documentation Hub**](https://sahooshuvranshu.github.io/Argus/documentation.html): Step-by-step setup and provider manuals.
-- 🤝 [**Contributing Guidelines**](CONTRIBUTING.md): Guide for contributors and development setup.
-- 🛡️ [**Security Policy**](SECURITY.md): Security reporting procedures and supported versions.
-- 📜 [**Code of Conduct**](CODE_OF_CONDUCT.md): Community standards and pledge.
-
----
-
 ## 📬 Contact & Support
 
-For inquiries, support, or security reports, please contact:
-- **Email**: [contact@sahooshuvranshu.is-a.dev](mailto:contact@sahooshuvranshu.is-a.dev)
-- **Repository Owner**: [SahooShuvranshu](https://github.com/SahooShuvranshu)
+ARGUS is developed and maintained by **SahooShuvranshu** and **Crystal Studio Labs**:
+- **Developer Website**: [sahooshuvranshu.is-a.dev](https://sahooshuvranshu.is-a.dev)
+- **Organization**: [Crystal Studio Labs](https://github.com/Crystal-Studio-Labs)
+- **GitHub Repository**: [Crystal-Studio-Labs/Argus](https://github.com/Crystal-Studio-Labs/Argus)
+- **Email Support**: [contact@sahooshuvranshu.is-a.dev](mailto:contact@sahooshuvranshu.is-a.dev)
