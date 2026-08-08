@@ -14,7 +14,7 @@ async function generateTopologyMap(diffText, aiClient = null, modelName = null) 
 
   if (!aiClient) {
     // Static fallback diagram generator
-    const fileMatches = [...diffText.matchAll(/diff --git a\/(.+?) b\/(.+?)/g)];
+    const fileMatches = [...diffText.matchAll(/diff --git a\/(\S+) b\/(\S+)/g)];
     if (fileMatches.length === 0) {
       return '```mermaid\nflowchart TD\n    PR["Pull Request"] --> Diff["Modified Files"]\n```';
     }
@@ -63,7 +63,7 @@ ${diffText}
     return `\`\`\`mermaid\n${diagramContent}\n\`\`\``;
   } catch (error) {
     // Fall back cleanly to static topology diagram on rate limit or API error
-    const fileMatches = [...diffText.matchAll(/diff --git a\/(.+?) b\/(.+?)/g)];
+    const fileMatches = [...diffText.matchAll(/diff --git a\/(\S+) b\/(\S+)/g)];
     if (fileMatches.length === 0) {
       return '```mermaid\nflowchart TD\n    PR["Pull Request"] --> Diff["Modified Files"]\n```';
     }
