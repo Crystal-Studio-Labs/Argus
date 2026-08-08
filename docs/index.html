@@ -4,24 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARGUS — Automated AI Code Reviewer & Architecture Guardian</title>
-  <meta name="description" content="Autonomous 3-stage AI code reviewer GitHub Action executing Atlas visual topology, Athena architectural compliance, and Hermes technical debt detection. Powered by Google Gemini and OpenAI-compatible providers.">
+  <meta name="description" content="Autonomous 3-stage AI code reviewer GitHub Action executing Atlas visual topology, Athena architectural compliance, and Hermes technical debt detection. Powered natively by Google Gemini and universal OpenAI-compatible providers.">
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
 
-  <!-- Open Graph / Facebook / LinkedIn -->
+  <!-- Open Graph / Social -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sahooshuvranshu.github.io/Argus/">
   <meta property="og:title" content="ARGUS — Automated AI Code Reviewer & Architecture Guardian">
-  <meta property="og:description" content="Autonomous 3-stage AI code reviewer GitHub Action executing Atlas visual topology, Athena architectural compliance, and Hermes technical debt detection. Powered by Google Gemini and OpenAI-compatible providers.">
+  <meta property="og:description" content="Autonomous 3-stage AI code reviewer GitHub Action executing Atlas visual topology, Athena architectural compliance, and Hermes technical debt detection.">
   <meta property="og:site_name" content="ARGUS">
-
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://sahooshuvranshu.github.io/Argus/">
-  <meta name="twitter:title" content="ARGUS — Automated AI Code Reviewer & Architecture Guardian">
-  <meta name="twitter:description" content="Autonomous 3-stage AI code reviewer GitHub Action executing Atlas visual topology, Athena architectural compliance, and Hermes technical debt detection.">
-  <meta name="twitter:creator" content="@sahooshuvranshu">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,14 +30,14 @@
   <nav class="navbar">
     <div class="nav-brand">
       <span class="eye-icon">👁️</span>
-      <a href="index.html" style="text-decoration: none; color: inherit;" class="brand-name">ARGUS<span class="brand-tag">// 100-EYED ARCHITECT</span></a>
+      <a href="#hero" class="brand-name">ARGUS<span class="brand-tag">// 100-EYED ARCHITECT</span></a>
     </div>
     <div class="nav-links">
       <a href="#pipeline" class="nav-link">PIPELINE</a>
       <a href="#mythology" class="nav-link">MYTHOLOGY</a>
       <a href="#providers" class="nav-link">PROVIDERS</a>
       <a href="#playground" class="nav-link">PLAYGROUND</a>
-      <a href="documentation.html" class="nav-link nav-highlight">DOCS</a>
+      <a href="#documentation" class="nav-link nav-highlight">DOCS</a>
       <a href="#quickstart" class="nav-link">QUICK START</a>
     </div>
     <div class="nav-actions">
@@ -54,7 +47,7 @@
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero-section">
+  <header class="hero-section" id="hero">
     <div class="hero-container">
       <div class="hero-content">
         <div class="badge-group">
@@ -68,7 +61,7 @@
         </p>
 
         <div class="hero-actions">
-          <a href="documentation.html" class="btn btn-lg btn-purple">EXPLORE DOCS & GUIDES</a>
+          <a href="#documentation" class="btn btn-lg btn-purple">EXPLORE DOCS & GUIDES</a>
           <a href="#playground" class="btn btn-lg btn-cyan">TRY LIVE PLAYGROUND</a>
           <a href="https://github.com/SahooShuvranshu/Argus" target="_blank" rel="noopener" class="btn btn-lg btn-white">VIEW GITHUB REPO</a>
         </div>
@@ -101,233 +94,322 @@
   </header>
 
   <!-- 3-Stage Evaluation Pipeline Section -->
-  <section class="section" id="pipeline">
-    <div class="section-header">
-      <span class="section-tag">// 3-STAGE PIPELINE</span>
-      <h2 class="section-title">AUTONOMOUS PR EVALUATION ENGINE</h2>
-      <p class="section-desc">ARGUS runs three specialized evaluation skills sequentially to analyze diffs from every structural angle.</p>
-    </div>
-
-    <div class="pipeline-grid">
-      <!-- Stage 1: Atlas -->
-      <div class="card card-atlas">
-        <div class="card-header-tab tab-cyan">
-          <span class="card-num">STAGE 01</span>
-          <span class="card-icon">🎨</span>
-          <h3 class="card-heading">ATLAS (VISUALIZER)</h3>
-        </div>
-        <div class="card-body">
-          <p class="card-text">Parses raw PR git diffs into an interactive Mermaid.js flowchart mapping changed files, modules, and control flows.</p>
-          <div class="code-preview-box">
-            <span class="code-label">OUTPUT // MERMAID TOPOLOGY</span>
-            <pre><code>flowchart TD
-  PR[PR Diff] --> Mod[src/authService.js]
-  Mod --> Util[utils/token.js]</code></pre>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="badge badge-mono">skills/atlas.js</span>
-        </div>
+  <section class="section section-dark" id="pipeline">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-purple">AUTOMATED REVIEW STAGES</span>
+        <h2 class="section-title">THE 3-STAGE EVALUATION PIPELINE</h2>
+        <p class="section-subtitle">Every pull request is evaluated sequentially by three specialized AI personas.</p>
       </div>
 
-      <!-- Stage 2: Athena -->
-      <div class="card card-athena">
-        <div class="card-header-tab tab-green">
-          <span class="card-num">STAGE 02</span>
-          <span class="card-icon">🏛️</span>
-          <h3 class="card-heading">ATHENA (ARCHITECT)</h3>
-        </div>
-        <div class="card-body">
-          <p class="card-text">Cross-references PR diffs against <code class="inline-code">architecture.md</code> rules to prevent modular decay and layering violations.</p>
-          <div class="code-preview-box">
-            <span class="code-label">OUTPUT // COMPLIANCE SCORECARD</span>
-            <pre><code>Status: ✅ COMPLIANT
-Rule ARGUS-02: Stack alignment verified.
-Modularity: 100% adherence.</code></pre>
+      <div class="pipeline-grid">
+        <!-- Stage 1: Atlas -->
+        <div class="card card-purple">
+          <div class="card-header">
+            <span class="card-icon">🎨</span>
+            <span class="card-badge">STAGE 1</span>
+          </div>
+          <h3 class="card-title">ATLAS — VISUALIZER</h3>
+          <p class="card-text">
+            Parses raw PR git diffs and generates an interactive <b>Mermaid.js flowchart</b> (<code class="inline-code">flowchart TD</code>) visually mapping modified control flows and module dependency changes.
+          </p>
+          <div class="card-footer">
+            <code class="file-tag">skills/atlas.js</code>
           </div>
         </div>
-        <div class="card-footer">
-          <span class="badge badge-mono">skills/athena.js</span>
-        </div>
-      </div>
 
-      <!-- Stage 3: Hermes -->
-      <div class="card card-hermes">
-        <div class="card-header-tab tab-gold">
-          <span class="card-num">STAGE 03</span>
-          <span class="card-icon">⚡</span>
-          <h3 class="card-heading">HERMES (SCANNER)</h3>
-        </div>
-        <div class="card-body">
-          <p class="card-text">Scans modified files for <code class="inline-code">// TODO</code>, <code class="inline-code">// FIXME</code>, empty placeholders, debug logs, and hardcoded API keys/secrets.</p>
-          <div class="code-preview-box">
-            <span class="code-label">OUTPUT // SEVERITY BADGES</span>
-            <pre><code>🔴 BLOCK | Secret Key Leak | L42
-🟡 WARN  | Unfinished Stub | L89
-🔵 INFO  | Debug Log       | L102</code></pre>
+        <!-- Stage 2: Athena -->
+        <div class="card card-green">
+          <div class="card-header">
+            <span class="card-icon">🏛️</span>
+            <span class="card-badge">STAGE 2</span>
+          </div>
+          <h3 class="card-title">ATHENA — ARCHITECT</h3>
+          <p class="card-text">
+            Cross-references code changes against rules in <code class="inline-code">architecture.md</code>. Evaluates stack declarations, layering rules, and stops architectural decay before code merges to <code class="inline-code">main</code>.
+          </p>
+          <div class="card-footer">
+            <code class="file-tag">skills/athena.js</code>
           </div>
         </div>
-        <div class="card-footer">
-          <span class="badge badge-mono">skills/hermes.js</span>
+
+        <!-- Stage 3: Hermes -->
+        <div class="card card-cyan">
+          <div class="card-header">
+            <span class="card-icon">⚡</span>
+            <span class="card-badge">STAGE 3</span>
+          </div>
+          <h3 class="card-title">HERMES — DEBT SCANNER</h3>
+          <p class="card-text">
+            Performs line-by-line inspection to detect hardcoded API keys/secrets (<span class="badge badge-red">🔴 BLOCK</span>), <code class="inline-code">// TODO</code> comments and empty function stubs (<span class="badge badge-yellow">🟡 WARN</span>), and debug logs (<span class="badge badge-blue">🔵 INFO</span>).
+          </p>
+          <div class="card-footer">
+            <code class="file-tag">skills/hermes.js</code>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Mythological Origins Section -->
-  <section class="section section-dark" id="mythology">
-    <div class="section-header">
-      <span class="section-tag">// GREEK MYTHOLOGY ORIGINS</span>
-      <h2 class="section-title">INSPIRATION & CODEBASE MAPPING</h2>
-      <p class="section-desc">Every skill and module in ARGUS is named after ancient Greek mythology, reflecting its exact technical purpose.</p>
-    </div>
-
-    <div class="mythology-grid">
-      <div class="myth-card">
-        <div class="myth-header">
-          <span class="myth-symbol">👁️</span>
-          <div>
-            <h3 class="myth-name">ARGUS PANOPTES</h3>
-            <span class="myth-greek">Ἄργος Πανόπτης</span>
-          </div>
-        </div>
-        <p class="myth-desc">The 100-eyed giant in Greek myth who never slept. Some eyes were always awake and watching.</p>
-        <div class="myth-mapping">
-          <strong>CODE MAPPING:</strong> <code class="inline-code">index.js</code> operates as the 100-eye guardian over PR events, ensuring bugs never slip through.
-        </div>
+  <section class="section" id="mythology">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-cyan">MYTHOLOGY & ARCHITECTURE</span>
+        <h2 class="section-title">MYTHOLOGICAL ORIGINS & CODEBASE MAPPING</h2>
+        <p class="section-subtitle">Deeply rooted in ancient Greek mythology, engineered for modern agentic software development.</p>
       </div>
 
-      <div class="myth-card">
-        <div class="myth-header">
-          <span class="myth-symbol">🎨</span>
-          <div>
-            <h3 class="myth-name">ATLAS</h3>
-            <span class="myth-greek">Ἄτλας</span>
-          </div>
+      <div class="mythology-grid">
+        <div class="myth-card">
+          <div class="myth-icon">👁️</div>
+          <h3>ARGUS PANOPTES (Ἄργος Πανόπτης)</h3>
+          <p class="myth-desc">The 100-eyed giant who never slept. In this codebase, <b>ARGUS</b> (<code class="inline-code">index.js</code>) watches over every Pull Request event to prevent bugs, architectural decay, and unfinished code from reaching production.</p>
         </div>
-        <p class="myth-desc">The Titan condemned to hold up the celestial heavens and map the structural realm on his shoulders.</p>
-        <div class="myth-mapping">
-          <strong>CODE MAPPING:</strong> <code class="inline-code">skills/atlas.js</code> maps codebase structural topology, drawing visual control flow flowcharts.
-        </div>
-      </div>
 
-      <div class="myth-card">
-        <div class="myth-header">
-          <span class="myth-symbol">🏛️</span>
-          <div>
-            <h3 class="myth-name">ATHENA</h3>
-            <span class="myth-greek">Ἀθηνᾶ</span>
-          </div>
+        <div class="myth-card">
+          <div class="myth-icon">🎨</div>
+          <h3>ATLAS (Ἄτλας)</h3>
+          <p class="myth-desc">The Titan who holds up the heavens. In this codebase, <b>Atlas</b> (<code class="inline-code">skills/atlas.js</code>) maps the structural topology of your codebase using interactive Mermaid.js flowcharts.</p>
         </div>
-        <p class="myth-desc">The goddess of wisdom, strategy, and military defense who enforced strategic rules and armor.</p>
-        <div class="myth-mapping">
-          <strong>CODE MAPPING:</strong> <code class="inline-code">skills/athena.js</code> cross-references diffs against <code class="inline-code">architecture.md</code> to prevent modular decay.
-        </div>
-      </div>
 
-      <div class="myth-card">
-        <div class="myth-header">
-          <span class="myth-symbol">⚡</span>
-          <div>
-            <h3 class="myth-name">HERMES</h3>
-            <span class="myth-greek">Ἑρμῆς</span>
-          </div>
+        <div class="myth-card">
+          <div class="myth-icon">🏛️</div>
+          <h3>ATHENA (Ἀθηνᾶ)</h3>
+          <p class="myth-desc">The goddess of wisdom and strategic order. In this codebase, <b>Athena</b> (<code class="inline-code">skills/athena.js</code>) acts as the strategic Architecture Guardian enforcing strict compliance against <code class="inline-code">architecture.md</code>.</p>
         </div>
-        <p class="myth-desc">The swift, wing-footed messenger god who inspected dark corners, uncovered secrets, and brought warnings.</p>
-        <div class="myth-mapping">
-          <strong>CODE MAPPING:</strong> <code class="inline-code">skills/hermes.js</code> swiftly scans code line-by-line for TODOs, secrets, and empty function stubs.
+
+        <div class="myth-card">
+          <div class="myth-icon">⚡</div>
+          <h3>HERMES (Ἑρμῆς)</h3>
+          <p class="myth-desc">The swift messenger god who inspects hidden corners. In this codebase, <b>Hermes</b> (<code class="inline-code">skills/hermes.js</code>) inspects modified files line-by-line for TODOs, secrets, and empty function stubs.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Universal AI Cloud Providers Section -->
-  <section class="section" id="providers">
-    <div class="section-header">
-      <span class="section-tag">// UNIVERSAL AI CLOUD COMPATIBILITY</span>
-      <h2 class="section-title">CHOOSE YOUR AI PROVIDER</h2>
-      <p class="section-desc">Google Gemini is supported natively by default. Pass any OpenAI-compatible key, endpoint, and model name to switch providers seamlessly.</p>
-    </div>
+  <section class="section section-dark" id="providers">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-purple">PROVIDER FREEDOM</span>
+        <h2 class="section-title">UNIVERSAL AI CLOUD PROVIDER COMPATIBILITY</h2>
+        <p class="section-subtitle">Powered by Google Gemini by default, with universal support for any OpenAI-compatible provider.</p>
+      </div>
 
-    <div class="provider-tabs">
-      <button class="tab-btn active" data-provider="gemini">GOOGLE GEMINI (DEFAULT)</button>
-      <button class="tab-btn" data-provider="nvidia">NVIDIA NIM</button>
-      <button class="tab-btn" data-provider="openrouter">OPENROUTER</button>
-      <button class="tab-btn" data-provider="groq">GROQ</button>
-      <button class="tab-btn" data-provider="openai">OPENAI</button>
-    </div>
-
-    <div class="provider-content-box">
-      <div class="provider-info" id="provider-info">
-        <div class="provider-meta">
-          <span class="meta-label">PROVIDER:</span> <span class="meta-val" id="prov-name">Google Gemini</span>
-          <span class="meta-label">SDK:</span> <span class="meta-val" id="prov-sdk">Native @google/genai</span>
-          <span class="meta-label">DEFAULT MODEL:</span> <span class="meta-val" id="prov-model">gemini-2.0-flash</span>
-          <span class="meta-label">BASE URL REQUIRED:</span> <span class="meta-val tag-green" id="prov-baseurl">NO (Native)</span>
+      <div class="provider-grid">
+        <div class="provider-card active-provider">
+          <div class="provider-badge">PRIMARY DEFAULT</div>
+          <h3>Google Gemini API</h3>
+          <p class="provider-model">Model: <code>gemini-2.0-flash</code></p>
+          <p class="provider-desc">Natively integrated via <code>@google/genai</code> SDK. Ultra-fast, 1M token context window, zero configuration required.</p>
+          <code class="env-example">gemini-api-key: ${{ secrets.GEMINI_API_KEY }}</code>
         </div>
-        <div class="code-block-wrapper">
-          <button class="copy-btn" id="copy-provider-yaml">COPY YAML</button>
-          <pre><code id="provider-yaml-code"># Google Gemini (Default Workflow Setup)
-- name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
-  with:
-    github-token: ${{ secrets.GITHUB_TOKEN }}
-    gemini-api-key: ${{ secrets.GEMINI_API_KEY }}</code></pre>
+
+        <div class="provider-card">
+          <div class="provider-badge provider-badge-groq">HIGH SPEED</div>
+          <h3>Groq Cloud</h3>
+          <p class="provider-model">Model: <code>llama-3.3-70b-versatile</code></p>
+          <p class="provider-desc">Auto-detected via <code>gsk_</code> keys. Sub-second 70B parameter LLM inference with massive 30 RPM / 14,400 RPD free tier limits.</p>
+          <code class="env-example">groq-api-key: ${{ secrets.GROQ_API_KEY }}</code>
+        </div>
+
+        <div class="provider-card">
+          <div class="provider-badge provider-badge-nvidia">ENTERPRISE</div>
+          <h3>NVIDIA NIM</h3>
+          <p class="provider-model">Model: <code>meta/llama-3.3-70b-instruct</code></p>
+          <p class="provider-desc">Auto-detected via <code>nvapi-</code> keys. Accelerated enterprise AI microservice endpoints.</p>
+          <code class="env-example">nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}</code>
+        </div>
+
+        <div class="provider-card">
+          <div class="provider-badge provider-badge-or">MULTI-MODEL</div>
+          <h3>OpenRouter</h3>
+          <p class="provider-model">Model: <code>google/gemini-2.0-flash-001</code></p>
+          <p class="provider-desc">Auto-detected via <code>sk-or-</code> keys. Universal router access to DeepSeek-R1, Gemini, and Claude.</p>
+          <code class="env-example">openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}</code>
+        </div>
+
+        <div class="provider-card">
+          <div class="provider-badge provider-badge-openai">DIRECT</div>
+          <h3>OpenAI Direct</h3>
+          <p class="provider-model">Model: <code>gpt-4o-mini</code> / <code>gpt-4o</code></p>
+          <p class="provider-desc">Direct REST client endpoint compatibility for standard OpenAI models.</p>
+          <code class="env-example">openai-api-key: ${{ secrets.OPENAI_API_KEY }}</code>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Live PR Interactive Playground -->
-  <section class="section section-dark" id="playground">
-    <div class="section-header">
-      <span class="section-tag">// INTERACTIVE SANDBOX</span>
-      <h2 class="section-title">LIVE PR REVIEW PLAYGROUND</h2>
-      <p class="section-desc">Select or paste a sample pull request git diff to watch ARGUS execute its 3-stage review pipeline live!</p>
-    </div>
-
-    <div class="playground-container">
-      <div class="playground-controls">
-        <label for="sample-select">SELECT SAMPLE PR DIFF:</label>
-        <select id="sample-select" class="select-brutalist">
-          <option value="clean">1. Clean Authentication Feature (All Pass)</option>
-          <option value="todo">2. Feature with TODOs & Hardcoded Secret (Hermes Flagged)</option>
-          <option value="arch">3. Architectural Layering Violation (Athena Warning)</option>
-        </select>
-
-        <button class="btn btn-purple" id="run-argus-btn">▶ RUN ARGUS EVALUATION</button>
+  <!-- Live PR Review Sandbox Playground -->
+  <section class="section" id="playground">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-cyan">INTERACTIVE PLAYGROUND</span>
+        <h2 class="section-title">TRY THE LIVE PR REVIEW SIMULATOR</h2>
+        <p class="section-subtitle">Paste a sample git diff or file content below to simulate ARGUS's 3-stage review pipeline live in your browser.</p>
       </div>
 
-      <div class="playground-workspace">
-        <div class="workspace-pane">
-          <div class="pane-header">INPUT // GIT PR DIFF</div>
-          <textarea id="diff-input" class="diff-textarea" spellcheck="false"></textarea>
+      <div class="playground-layout">
+        <div class="playground-input-box">
+          <div class="box-header">
+            <span>INPUT: SAMPLE PR GIT DIFF</span>
+            <button class="btn btn-sm btn-ghost" id="load-sample-btn">LOAD DEMO DIFF</button>
+          </div>
+          <textarea id="diff-input" class="diff-textarea" placeholder="Paste your git diff or code here..."></textarea>
+          <button class="btn btn-lg btn-purple btn-block" id="run-argus-btn">▶ RUN ARGUS 3-STAGE REVIEW</button>
         </div>
 
-        <div class="workspace-pane">
-          <div class="pane-header">OUTPUT // ARGUS EXECUTIVE SCORECARD</div>
+        <div class="playground-output-box">
+          <div class="box-header">
+            <span>OUTPUT: ARGUS EXECUTIVE REVIEW SCORECARD</span>
+            <span class="status-badge" id="eval-status-badge">READY</span>
+          </div>
           <div id="argus-output" class="argus-output-box">
-            <p class="placeholder-text">Click "RUN ARGUS EVALUATION" to simulate the 3-stage PR review...</p>
+            <p class="placeholder-text">Click "RUN ARGUS 3-STAGE REVIEW" to evaluate sample code and render the executive scorecard...</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Quick Start & YAML Copy Generator -->
-  <section class="section" id="quickstart">
-    <div class="section-header">
-      <span class="section-tag">// ACTION SETUP</span>
-      <h2 class="section-title">QUICK START & INSTALLATION</h2>
-      <p class="section-desc">Add ARGUS to any repository by creating <code class="inline-code">.github/workflows/argus.yml</code>.</p>
-    </div>
-
-    <div class="quickstart-box">
-      <div class="qs-header">
-        <span class="file-path">.github/workflows/argus.yml</span>
-        <button class="btn btn-sm btn-cyan" id="copy-qs-btn">COPY WORKFLOW</button>
+  <!-- Single-Page Master Documentation Section -->
+  <section class="section section-dark" id="documentation">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-purple">MASTER DOCUMENTATION HUB</span>
+        <h2 class="section-title">DOCUMENTATION, HYBRID ENGINE & RATE LIMIT GUIDANCE</h2>
+        <p class="section-subtitle">Complete setup manuals, hybrid provider auto-detection rules, action inputs, and API plan guidance.</p>
       </div>
-      <pre><code id="qs-code">name: ARGUS AI Code Review
+
+      <!-- Docs Tabs / Subsections Grid -->
+      <div class="docs-detail-grid">
+
+        <!-- 1. Hybrid Provider Resolution -->
+        <div class="doc-card">
+          <div class="doc-card-title">🧠 HYBRID PROVIDER RESOLUTION & AUTO-DETECTION</div>
+          <p class="doc-card-desc">ARGUS uses a smart Hybrid Resolution Engine. Explicit workflow inputs (<code class="inline-code">model</code>, <code class="inline-code">base-url</code>) ALWAYS override defaults. If omitted, ARGUS auto-routes based on key prefix:</p>
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Key Prefix</th>
+                <th>Target Provider</th>
+                <th>Default Base URL</th>
+                <th>Default Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>gsk_...</code></td>
+                <td>Groq Cloud</td>
+                <td><code>https://api.groq.com/openai/v1</code></td>
+                <td><code>llama-3.3-70b-versatile</code></td>
+              </tr>
+              <tr>
+                <td><code>nvapi-...</code></td>
+                <td>NVIDIA NIM</td>
+                <td><code>https://integrate.api.nvidia.com/v1</code></td>
+                <td><code>meta/llama-3.3-70b-instruct</code></td>
+              </tr>
+              <tr>
+                <td><code>sk-or-...</code></td>
+                <td>OpenRouter</td>
+                <td><code>https://openrouter.ai/api/v1</code></td>
+                <td><code>google/gemini-2.0-flash-001</code></td>
+              </tr>
+              <tr>
+                <td><code>AIza...</code> / <code>AQ...</code></td>
+                <td>Google Gemini</td>
+                <td>Native SDK</td>
+                <td><code>gemini-2.0-flash</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 2. Action Inputs & Configuration Matrix -->
+        <div class="doc-card">
+          <div class="doc-card-title">⚙️ ACTION INPUTS & CONFIGURATION PARAMETERS</div>
+          <p class="doc-card-desc">Reference table for all inputs declared in <code class="inline-code">action.yml</code>:</p>
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Input Key</th>
+                <th>Description</th>
+                <th>Required</th>
+                <th>Default Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>github-token</code></td>
+                <td>GitHub token for fetching diffs and posting review comments</td>
+                <td>False</td>
+                <td><code>${{ github.token }}</code></td>
+              </tr>
+              <tr>
+                <td><code>gemini-api-key</code></td>
+                <td>Google Gemini API key (primary default engine)</td>
+                <td>False</td>
+                <td><i>None</i></td>
+              </tr>
+              <tr>
+                <td><code>groq-api-key</code></td>
+                <td>Groq Cloud API key (sub-second 70B inference)</td>
+                <td>False</td>
+                <td><i>None</i></td>
+              </tr>
+              <tr>
+                <td><code>api-key</code></td>
+                <td>Universal API key for Gemini or OpenAI-compatible providers</td>
+                <td>False</td>
+                <td><i>None</i></td>
+              </tr>
+              <tr>
+                <td><code>base-url</code></td>
+                <td>Custom REST endpoint URL for OpenAI-compatible providers</td>
+                <td>False</td>
+                <td><i>Auto-detected</i></td>
+              </tr>
+              <tr>
+                <td><code>model</code></td>
+                <td>AI model identifier string</td>
+                <td>False</td>
+                <td><code>gemini-2.0-flash</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 3. AI Provider Rate Limits & Plan Guidance -->
+        <div class="doc-card">
+          <div class="doc-card-title">💡 AI PROVIDER RATE LIMITS & PLAN GUIDANCE</div>
+          <div class="guidance-box">
+            <p><b>Free Tier API Keys:</b> Free tier API keys (such as Google Gemini Free Tier with 15 Requests/Minute) may encounter rate limit pauses (<code class="inline-code">HTTP 429</code>) during rapid consecutive PR commits.</p>
+            <p><b>Paid / Pro / Subscription Plans:</b> Paid API keys or higher-tier subscription plans (Groq Cloud, NVIDIA NIM, OpenAI Pro, Gemini Pay-As-You-Go) operate with virtually unlimited rate limits and zero error pauses.</p>
+            <p><b>Zero CI Break Guarantee:</b> If rate limit errors occur on Free Tier keys, ARGUS's built-in <b>Fallback Static Analysis Engine</b> automatically completes the PR evaluation using offline static regex parsing without crashing your CI build pipeline.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start Workflow Section -->
+  <section class="section" id="quickstart">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="tag tag-cyan">EASY SETUP</span>
+        <h2 class="section-title">QUICK START WORKFLOW SETUP</h2>
+        <p class="section-subtitle">Copy and paste this workflow file into your repository under <code class="inline-code">.github/workflows/argus.yml</code>.</p>
+      </div>
+
+      <div class="code-block-wrapper">
+        <div class="code-header">
+          <span>.github/workflows/argus.yml</span>
+          <button class="btn btn-sm btn-ghost" id="copy-workflow-btn">COPY YAML</button>
+        </div>
+        <pre><code class="language-yaml">name: ARGUS AI Code Review
 
 on:
   pull_request:
@@ -360,10 +442,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           gemini-api-key: ${{ secrets.GEMINI_API_KEY }}</code></pre>
+      </div>
     </div>
   </section>
 
-  <!-- Remade Footer -->
+  <!-- Remade 3-Column Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-brand">
@@ -375,19 +458,11 @@ jobs:
       </div>
 
       <div class="link-col">
-        <h4>DOCUMENTATION</h4>
-        <a href="documentation.html">Docs & Guides Hub</a>
-        <a href="architecture.md" target="_blank" rel="noopener">architecture.md</a>
-        <a href="AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a>
-        <a href="AGENTS_AND_SKILLS.md" target="_blank" rel="noopener">AGENTS_AND_SKILLS.md</a>
-      </div>
-
-      <div class="link-col">
         <h4>AI PROVIDERS</h4>
         <a href="#providers">Google Gemini (Default)</a>
+        <a href="#providers">Groq Cloud</a>
         <a href="#providers">NVIDIA NIM</a>
         <a href="#providers">OpenRouter</a>
-        <a href="#providers">Groq Cloud</a>
         <a href="#providers">OpenAI Direct</a>
       </div>
 

@@ -162,6 +162,7 @@ code, pre, .font-mono {
   font-weight: 800;
   color: var(--brand-white);
   letter-spacing: -0.02em;
+  text-decoration: none;
 }
 
 .brand-tag {
@@ -806,7 +807,7 @@ code, pre, .font-mono {
   max-width: 100%;
 }
 
-/* Remade Brutalist Footer */
+/* Remade Brutalist 3-Column Footer */
 .footer {
   background: #000000;
   border-top: var(--border-brutalist);
@@ -818,9 +819,80 @@ code, pre, .font-mono {
   max-width: 1200px;
   margin: 0 auto 40px auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 32px;
   width: 100%;
+}
+
+/* Master Documentation Section Styles */
+.docs-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.doc-card {
+  background: var(--card-bg);
+  border: var(--border-brutalist);
+  padding: 32px;
+  box-shadow: var(--shadow-hard-pop);
+  border-radius: 4px;
+}
+
+.doc-card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--argus-purple-glow);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.doc-card-desc {
+  font-size: 0.95rem;
+  color: #94A3B8;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+
+.doc-table th,
+.doc-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-table th {
+  font-family: var(--font-display);
+  font-weight: 700;
+  background-color: rgba(124, 58, 237, 0.15);
+  color: #FFFFFF;
+}
+
+.guidance-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: rgba(124, 58, 237, 0.08);
+  border-left: 4px solid var(--argus-purple);
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.guidance-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #E2E8F0;
 }
 
 .footer-brand {
@@ -946,8 +1018,8 @@ code, pre, .font-mono {
     gap: 10px;
   }
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }
 

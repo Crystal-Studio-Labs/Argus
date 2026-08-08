@@ -165,7 +165,7 @@ index 42d7d2f..f88feb3 100644
       const currentVal = sampleSelect ? sampleSelect.value : 'clean';
       runArgusBtn.disabled = true;
       runArgusBtn.textContent = '⏳ EVALUATING PR...';
-
+      
       argusOutput.innerHTML = `
         <p class="log-line"><span class="log-info">[STAGE 1]</span> 🎨 Executing Atlas visual topology parser...</p>
         <p class="log-line"><span class="log-info">[STAGE 2]</span> 🏛️ Executing Athena architecture compliance guard...</p>
