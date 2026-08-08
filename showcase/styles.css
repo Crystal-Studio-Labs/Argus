@@ -52,6 +52,21 @@ html, body {
   line-height: 1.6;
 }
 
+/* Global Link Settings */
+a {
+  color: var(--atlas-cyan);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--argus-purple-glow);
+}
+
+.nav-link:hover, .brand-name:hover, .btn:hover, .tag:hover {
+  text-decoration: none;
+}
+
 /* Typography Rules */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
