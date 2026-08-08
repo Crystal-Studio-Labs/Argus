@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseurlNeeded: "NO (Native)",
       yaml: `# Google Gemini (Default Workflow Setup)
 - name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
+  uses: Crystal-Studio-Labs/Argus@main
   with:
     github-token: \${{ secrets.GITHUB_TOKEN }}
     gemini-api-key: \${{ secrets.GEMINI_API_KEY }}`
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseurlNeeded: "YES",
       yaml: `# NVIDIA NIM Setup
 - name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
+  uses: Crystal-Studio-Labs/Argus@main
   with:
     github-token: \${{ secrets.GITHUB_TOKEN }}
     api-key: \${{ secrets.NVIDIA_API_KEY }}
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseurlNeeded: "YES",
       yaml: `# OpenRouter Setup
 - name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
+  uses: Crystal-Studio-Labs/Argus@main
   with:
     github-token: \${{ secrets.GITHUB_TOKEN }}
     api-key: \${{ secrets.OPENROUTER_API_KEY }}
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseurlNeeded: "YES",
       yaml: `# Groq Cloud Setup
 - name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
+  uses: Crystal-Studio-Labs/Argus@main
   with:
     github-token: \${{ secrets.GITHUB_TOKEN }}
     api-key: \${{ secrets.GROQ_API_KEY }}
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       baseurlNeeded: "NO (Standard Endpoint)",
       yaml: `# OpenAI Direct Setup
 - name: Run ARGUS AI Reviewer
-  uses: SahooShuvranshu/Argus@main
+  uses: Crystal-Studio-Labs/Argus@main
   with:
     github-token: \${{ secrets.GITHUB_TOKEN }}
     api-key: \${{ secrets.OPENAI_API_KEY }}

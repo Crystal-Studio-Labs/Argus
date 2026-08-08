@@ -1,6 +1,6 @@
 # 👁️ ARGUS — Autonomous 3-Stage AI Code Reviewer & Architecture Guardian
 
-[![CI Pipeline](https://img.shields.io/badge/CI_PIPELINE-PASSED-10B981?style=for-the-badge&logo=github-actions)](https://github.com/SahooShuvranshu/Argus/actions/workflows/ci.yml)
+[![CI Pipeline](https://img.shields.io/badge/CI_PIPELINE-PASSED-10B981?style=for-the-badge&logo=github-actions)](https://github.com/Crystal-Studio-Labs/Argus/actions/workflows/ci.yml)
 [![Marketplace](https://img.shields.io/badge/MARKETPLACE-ARGUS_AI_CODE_REVIEWER-7C3AED?style=for-the-badge&logo=github)](https://github.com/marketplace/actions/argus-ai-code-reviewer)
 [![Node.js](https://img.shields.io/badge/NODE.JS-%3E%3D20-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/LICENSE-MIT-F59E0B?style=for-the-badge)](LICENSE)
@@ -121,7 +121,7 @@ jobs:
         run: npm ci
 
       - name: Run ARGUS AI Reviewer (Google Gemini)
-        uses: SahooShuvranshu/Argus@main
+        uses: Crystal-Studio-Labs/Argus@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
@@ -161,7 +161,7 @@ jobs:
         run: npm ci
 
       - name: Run ARGUS AI Reviewer (NVIDIA NIM / OpenRouter / Groq)
-        uses: SahooShuvranshu/Argus@main
+        uses: Crystal-Studio-Labs/Argus@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           api-key: ${{ secrets.NVIDIA_API_KEY }}               # or OPENROUTER_API_KEY / OPENAI_API_KEY
@@ -224,7 +224,7 @@ jobs:
 
 ```bash
 # Clone the repository
-git clone https://github.com/SahooShuvranshu/Argus.git
+git clone https://github.com/Crystal-Studio-Labs/Argus.git
 cd Argus
 
 # Install dependencies

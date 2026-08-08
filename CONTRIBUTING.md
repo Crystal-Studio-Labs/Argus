@@ -1,7 +1,7 @@
 # 🤝 Contributing to ARGUS
 
 [![Contributing Guide](https://img.shields.io/badge/CONTRIBUTING-GUIDE-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
-[![PRs Welcome](https://img.shields.io/badge/PRS-WELCOME-blue?style=for-the-badge)](https://github.com/SahooShuvranshu/Argus/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRS-WELCOME-blue?style=for-the-badge)](https://github.com/Crystal-Studio-Labs/Argus/pulls)
 [![Community](https://img.shields.io/badge/COMMUNITY-OPEN-purple?style=for-the-badge)](mailto:contact@sahooshuvranshu.is-a.dev)
 
 Thank you for your interest in contributing to **ARGUS**! We welcome contributions from developers, researchers, and open-source enthusiasts.
@@ -27,7 +27,7 @@ Thank you for your interest in contributing to **ARGUS**! We welcome contributio
 
 ```bash
 # Fork & Clone repository
-git clone https://github.com/SahooShuvranshu/Argus.git
+git clone https://github.com/Crystal-Studio-Labs/Argus.git
 cd Argus
 
 # Install dependencies
@@ -44,4 +44,4 @@ npm test
 
 If you have questions, feedback, or need guidance on contributing, feel free to contact us:
 - **Email**: [contact@sahooshuvranshu.is-a.dev](mailto:contact@sahooshuvranshu.is-a.dev)
-- **GitHub Issues**: [Open an issue](https://github.com/SahooShuvranshu/Argus/issues)
+- **GitHub Issues**: [Open an issue](https://github.com/Crystal-Studio-Labs/Argus/issues)

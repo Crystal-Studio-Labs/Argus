@@ -219,7 +219,7 @@ ${athenaSection}
 ${hermesSection}
 
 ---
-*Report generated automatically by [ARGUS AI PR Reviewer](https://github.com/SahooShuvranshu/Argus).*
+*Report generated automatically by [ARGUS AI PR Reviewer](https://github.com/Crystal-Studio-Labs/Argus).*
 `;
 
     // 6. Post or Update PR Comment
