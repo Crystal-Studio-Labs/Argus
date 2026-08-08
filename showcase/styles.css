@@ -474,6 +474,15 @@ code, pre, .font-mono {
   max-width: 600px;
 }
 
+/* About Section Grid Styles */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  width: 100%;
+  margin-top: 32px;
+}
+
 /* 3-Stage Pipeline Grid */
 .pipeline-grid {
   display: grid;
@@ -990,6 +999,7 @@ code, pre, .font-mono {
 
 @media (max-width: 900px) {
   .hero-container { grid-template-columns: 1fr; gap: 32px; }
+  .about-grid { grid-template-columns: 1fr; }
   .pipeline-grid { grid-template-columns: 1fr; }
   .mythology-grid { grid-template-columns: 1fr; }
   .playground-workspace { grid-template-columns: 1fr; }
