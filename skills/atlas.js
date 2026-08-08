@@ -35,7 +35,7 @@ CRITICAL MERMAID SYNTAX RULES:
 1. Always wrap ALL node labels in double quotes inside square brackets: e.g. NodeA["public/app.js"], NodeB["GET /api/dashboard/status"].
 2. Never use unquoted slashes (/), parentheses, or special characters in node definitions (e.g. NEVER write B[/path] or C(fn())).
 3. Use simple alphanumeric IDs for nodes (A, B, C, Node1, Node2).
-4. Arrow syntax must be strictly \`-->\` or \`-->|label|\`.
+4. Arrow syntax must be strictly \`-->\` or \`-->|label|\` (NEVER write \`-->|label|>\`).
 5. Ensure the diagram begins with \`flowchart TD\`.
 
 Output ONLY the Mermaid.js code block wrapped in \`\`\`mermaid and \`\`\`.
@@ -69,6 +69,8 @@ ${diffText}
 
     // Post-process: sanitize unquoted slash shapes like B[/path] -> B["/path"]
     diagramContent = diagramContent.replace(/([A-Za-z0-9_]+)\[\/(.*?)\]/g, '$1["/$2"]');
+    // Post-process: sanitize invalid trailing arrow tags like -->|label|> into -->|label|
+    diagramContent = diagramContent.replace(/-->\s*\|(.*?)\|\s*>/g, '-->|$1|');
     return `\`\`\`mermaid\n${diagramContent}\n\`\`\``;
   } catch (error) {
     console.warn(`[Atlas] AI generation encountered error (falling back to static topology): ${error.message}`);
