@@ -97,54 +97,72 @@
   <section class="section section-dark" id="pipeline">
     <div class="section-container">
       <div class="section-header">
-        <span class="tag tag-purple">AUTOMATED REVIEW STAGES</span>
+        <span class="section-tag">AUTOMATED REVIEW STAGES</span>
         <h2 class="section-title">THE 3-STAGE EVALUATION PIPELINE</h2>
-        <p class="section-subtitle">Every pull request is evaluated sequentially by three specialized AI personas.</p>
+        <p class="section-desc">Every pull request is evaluated sequentially by three specialized AI personas.</p>
       </div>
 
       <div class="pipeline-grid">
         <!-- Stage 1: Atlas -->
-        <div class="card card-purple">
-          <div class="card-header">
+        <div class="card">
+          <div class="card-header-tab tab-cyan">
+            <span class="card-num">STAGE 1</span>
             <span class="card-icon">🎨</span>
-            <span class="card-badge">STAGE 1</span>
+            <h3 class="card-heading">ATLAS — VISUALIZER</h3>
           </div>
-          <h3 class="card-title">ATLAS — VISUALIZER</h3>
-          <p class="card-text">
-            Parses raw PR git diffs and generates an interactive <b>Mermaid.js flowchart</b> (<code class="inline-code">flowchart TD</code>) visually mapping modified control flows and module dependency changes.
-          </p>
+          <div class="card-body">
+            <p class="card-text">
+              Parses raw PR git diffs and generates an interactive <b>Mermaid.js flowchart</b> (<code class="inline-code">flowchart TD</code>) visually mapping modified control flows and module dependency changes.
+            </p>
+            <div class="code-preview-box">
+              <span class="code-label">OUTPUT DIAGRAM TYPE</span>
+              <code>flowchart TD</code>
+            </div>
+          </div>
           <div class="card-footer">
-            <code class="file-tag">skills/atlas.js</code>
+            <span class="badge">skills/atlas.js</span>
           </div>
         </div>
 
         <!-- Stage 2: Athena -->
-        <div class="card card-green">
-          <div class="card-header">
+        <div class="card">
+          <div class="card-header-tab tab-green">
+            <span class="card-num">STAGE 2</span>
             <span class="card-icon">🏛️</span>
-            <span class="card-badge">STAGE 2</span>
+            <h3 class="card-heading">ATHENA — ARCHITECT</h3>
           </div>
-          <h3 class="card-title">ATHENA — ARCHITECT</h3>
-          <p class="card-text">
-            Cross-references code changes against rules in <code class="inline-code">architecture.md</code>. Evaluates stack declarations, layering rules, and stops architectural decay before code merges to <code class="inline-code">main</code>.
-          </p>
+          <div class="card-body">
+            <p class="card-text">
+              Cross-references code changes against rules in <code class="inline-code">architecture.md</code>. Evaluates stack declarations, layering rules, and stops architectural decay before code merges to <code class="inline-code">main</code>.
+            </p>
+            <div class="code-preview-box">
+              <span class="code-label">RULE ENGINE ARCHITECTURE</span>
+              <code>architecture.md compliance</code>
+            </div>
+          </div>
           <div class="card-footer">
-            <code class="file-tag">skills/athena.js</code>
+            <span class="badge">skills/athena.js</span>
           </div>
         </div>
 
         <!-- Stage 3: Hermes -->
-        <div class="card card-cyan">
-          <div class="card-header">
+        <div class="card">
+          <div class="card-header-tab tab-gold">
+            <span class="card-num">STAGE 3</span>
             <span class="card-icon">⚡</span>
-            <span class="card-badge">STAGE 3</span>
+            <h3 class="card-heading">HERMES — DEBT SCANNER</h3>
           </div>
-          <h3 class="card-title">HERMES — DEBT SCANNER</h3>
-          <p class="card-text">
-            Performs line-by-line inspection to detect hardcoded API keys/secrets (<span class="badge badge-red">🔴 BLOCK</span>), <code class="inline-code">// TODO</code> comments and empty function stubs (<span class="badge badge-yellow">🟡 WARN</span>), and debug logs (<span class="badge badge-blue">🔵 INFO</span>).
-          </p>
+          <div class="card-body">
+            <p class="card-text">
+              Performs line-by-line inspection to detect hardcoded API keys/secrets (<span class="badge">🔴 BLOCK</span>), <code class="inline-code">// TODO</code> comments and empty function stubs (<span class="badge">🟡 WARN</span>), and debug logs (<span class="badge">🔵 INFO</span>).
+            </p>
+            <div class="code-preview-box">
+              <span class="code-label">DETECTION MATRIX</span>
+              <code>Secrets, TODOs & Placeholders</code>
+            </div>
+          </div>
           <div class="card-footer">
-            <code class="file-tag">skills/hermes.js</code>
+            <span class="badge">skills/hermes.js</span>
           </div>
         </div>
       </div>
@@ -155,34 +173,66 @@
   <section class="section" id="mythology">
     <div class="section-container">
       <div class="section-header">
-        <span class="tag tag-cyan">MYTHOLOGY & ARCHITECTURE</span>
+        <span class="section-tag">MYTHOLOGY & ARCHITECTURE</span>
         <h2 class="section-title">MYTHOLOGICAL ORIGINS & CODEBASE MAPPING</h2>
-        <p class="section-subtitle">Deeply rooted in ancient Greek mythology, engineered for modern agentic software development.</p>
+        <p class="section-desc">Deeply rooted in ancient Greek mythology, engineered for modern agentic software development.</p>
       </div>
 
       <div class="mythology-grid">
         <div class="myth-card">
-          <div class="myth-icon">👁️</div>
-          <h3>ARGUS PANOPTES (Ἄργος Πανόπτης)</h3>
+          <div class="myth-header">
+            <span class="myth-symbol">👁️</span>
+            <div>
+              <h3 class="myth-name">ARGUS PANOPTES</h3>
+              <span class="myth-greek">Ἄργος Πανόπτης</span>
+            </div>
+          </div>
           <p class="myth-desc">The 100-eyed giant who never slept. In this codebase, <b>ARGUS</b> (<code class="inline-code">index.js</code>) watches over every Pull Request event to prevent bugs, architectural decay, and unfinished code from reaching production.</p>
+          <div class="myth-mapping">
+            <strong>Code Mapping:</strong> <code>index.js</code> (Action Orchestrator)
+          </div>
         </div>
 
         <div class="myth-card">
-          <div class="myth-icon">🎨</div>
-          <h3>ATLAS (Ἄτλας)</h3>
+          <div class="myth-header">
+            <span class="myth-symbol">🎨</span>
+            <div>
+              <h3 class="myth-name">ATLAS</h3>
+              <span class="myth-greek">Ἄτλας</span>
+            </div>
+          </div>
           <p class="myth-desc">The Titan who holds up the heavens. In this codebase, <b>Atlas</b> (<code class="inline-code">skills/atlas.js</code>) maps the structural topology of your codebase using interactive Mermaid.js flowcharts.</p>
+          <div class="myth-mapping">
+            <strong>Code Mapping:</strong> <code>skills/atlas.js</code> (Stage 1 Visualizer)
+          </div>
         </div>
 
         <div class="myth-card">
-          <div class="myth-icon">🏛️</div>
-          <h3>ATHENA (Ἀθηνᾶ)</h3>
+          <div class="myth-header">
+            <span class="myth-symbol">🏛️</span>
+            <div>
+              <h3 class="myth-name">ATHENA</h3>
+              <span class="myth-greek">Ἀθηνᾶ</span>
+            </div>
+          </div>
           <p class="myth-desc">The goddess of wisdom and strategic order. In this codebase, <b>Athena</b> (<code class="inline-code">skills/athena.js</code>) acts as the strategic Architecture Guardian enforcing strict compliance against <code class="inline-code">architecture.md</code>.</p>
+          <div class="myth-mapping">
+            <strong>Code Mapping:</strong> <code>skills/athena.js</code> (Stage 2 Compliance)
+          </div>
         </div>
 
         <div class="myth-card">
-          <div class="myth-icon">⚡</div>
-          <h3>HERMES (Ἑρμῆς)</h3>
+          <div class="myth-header">
+            <span class="myth-symbol">⚡</span>
+            <div>
+              <h3 class="myth-name">HERMES</h3>
+              <span class="myth-greek">Ἑρμῆς</span>
+            </div>
+          </div>
           <p class="myth-desc">The swift messenger god who inspects hidden corners. In this codebase, <b>Hermes</b> (<code class="inline-code">skills/hermes.js</code>) inspects modified files line-by-line for TODOs, secrets, and empty function stubs.</p>
+          <div class="myth-mapping">
+            <strong>Code Mapping:</strong> <code>skills/hermes.js</code> (Stage 3 Debt Scanner)
+          </div>
         </div>
       </div>
     </div>
@@ -192,50 +242,35 @@
   <section class="section section-dark" id="providers">
     <div class="section-container">
       <div class="section-header">
-        <span class="tag tag-purple">PROVIDER FREEDOM</span>
+        <span class="section-tag">PROVIDER FREEDOM</span>
         <h2 class="section-title">UNIVERSAL AI CLOUD PROVIDER COMPATIBILITY</h2>
-        <p class="section-subtitle">Powered by Google Gemini by default, with universal support for any OpenAI-compatible provider.</p>
+        <p class="section-desc">Powered by Google Gemini by default, with universal support for any OpenAI-compatible provider.</p>
       </div>
 
-      <div class="provider-grid">
-        <div class="provider-card active-provider">
-          <div class="provider-badge">PRIMARY DEFAULT</div>
-          <h3>Google Gemini API</h3>
-          <p class="provider-model">Model: <code>gemini-2.0-flash</code></p>
-          <p class="provider-desc">Natively integrated via <code>@google/genai</code> SDK. Ultra-fast, 1M token context window, zero configuration required.</p>
-          <code class="env-example">gemini-api-key: ${{ secrets.GEMINI_API_KEY }}</code>
+      <div class="provider-tabs">
+        <button class="tab-btn active" data-provider="gemini">Google Gemini (Default)</button>
+        <button class="tab-btn" data-provider="groq">Groq Cloud</button>
+        <button class="tab-btn" data-provider="nvidia">NVIDIA NIM</button>
+        <button class="tab-btn" data-provider="openrouter">OpenRouter</button>
+        <button class="tab-btn" data-provider="openai">OpenAI Direct</button>
+      </div>
+
+      <div class="provider-content-box">
+        <div class="provider-meta">
+          <div><span class="meta-label">PROVIDER:</span> <span class="meta-val" id="prov-name">Google Gemini (Default)</span></div>
+          <div><span class="meta-label">SDK:</span> <span class="meta-val" id="prov-sdk">Native @google/genai</span></div>
+          <div><span class="meta-label">DEFAULT MODEL:</span> <span class="meta-val" id="prov-model">gemini-2.0-flash</span></div>
+          <div><span class="meta-label">BASE URL:</span> <span class="meta-val" id="prov-baseurl">NO (Native)</span></div>
         </div>
 
-        <div class="provider-card">
-          <div class="provider-badge provider-badge-groq">HIGH SPEED</div>
-          <h3>Groq Cloud</h3>
-          <p class="provider-model">Model: <code>llama-3.3-70b-versatile</code></p>
-          <p class="provider-desc">Auto-detected via <code>gsk_</code> keys. Sub-second 70B parameter LLM inference with massive 30 RPM / 14,400 RPD free tier limits.</p>
-          <code class="env-example">groq-api-key: ${{ secrets.GROQ_API_KEY }}</code>
-        </div>
-
-        <div class="provider-card">
-          <div class="provider-badge provider-badge-nvidia">ENTERPRISE</div>
-          <h3>NVIDIA NIM</h3>
-          <p class="provider-model">Model: <code>meta/llama-3.3-70b-instruct</code></p>
-          <p class="provider-desc">Auto-detected via <code>nvapi-</code> keys. Accelerated enterprise AI microservice endpoints.</p>
-          <code class="env-example">nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}</code>
-        </div>
-
-        <div class="provider-card">
-          <div class="provider-badge provider-badge-or">MULTI-MODEL</div>
-          <h3>OpenRouter</h3>
-          <p class="provider-model">Model: <code>google/gemini-2.0-flash-001</code></p>
-          <p class="provider-desc">Auto-detected via <code>sk-or-</code> keys. Universal router access to DeepSeek-R1, Gemini, and Claude.</p>
-          <code class="env-example">openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}</code>
-        </div>
-
-        <div class="provider-card">
-          <div class="provider-badge provider-badge-openai">DIRECT</div>
-          <h3>OpenAI Direct</h3>
-          <p class="provider-model">Model: <code>gpt-4o-mini</code> / <code>gpt-4o</code></p>
-          <p class="provider-desc">Direct REST client endpoint compatibility for standard OpenAI models.</p>
-          <code class="env-example">openai-api-key: ${{ secrets.OPENAI_API_KEY }}</code>
+        <div class="code-block-wrapper">
+          <button class="copy-btn" id="copy-provider-yaml">COPY YAML</button>
+          <pre><code class="language-yaml" id="provider-yaml-code"># Google Gemini (Default Workflow Setup)
+- name: Run ARGUS AI Reviewer
+  uses: SahooShuvranshu/Argus@main
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    gemini-api-key: ${{ secrets.GEMINI_API_KEY }}</code></pre>
         </div>
       </div>
     </div>
@@ -244,29 +279,31 @@
   <!-- Live PR Review Sandbox Playground -->
   <section class="section" id="playground">
     <div class="section-container">
-      <div class="section-header">
-        <span class="tag tag-cyan">INTERACTIVE PLAYGROUND</span>
-        <h2 class="section-title">TRY THE LIVE PR REVIEW SIMULATOR</h2>
-        <p class="section-subtitle">Paste a sample git diff or file content below to simulate ARGUS's 3-stage review pipeline live in your browser.</p>
-      </div>
-
-      <div class="playground-layout">
-        <div class="playground-input-box">
-          <div class="box-header">
-            <span>INPUT: SAMPLE PR GIT DIFF</span>
-            <button class="btn btn-sm btn-ghost" id="load-sample-btn">LOAD DEMO DIFF</button>
+      <div class="playground-container">
+        <div class="playground-controls">
+          <div>
+            <span class="section-tag">INTERACTIVE TESTBENCH</span>
+            <h3 style="font-size: 1.2rem;">SELECT PRESET CODE DIFF:</h3>
           </div>
-          <textarea id="diff-input" class="diff-textarea" placeholder="Paste your git diff or code here..."></textarea>
-          <button class="btn btn-lg btn-purple btn-block" id="run-argus-btn">▶ RUN ARGUS 3-STAGE REVIEW</button>
+          <select id="sample-select" class="select-brutalist">
+            <option value="clean">Preset 1: Clean Refactor PR (All Pass)</option>
+            <option value="todo">Preset 2: Debt PR (TODOs & Secret Keys)</option>
+            <option value="arch">Preset 3: Layering Boundary Violation PR</option>
+          </select>
         </div>
 
-        <div class="playground-output-box">
-          <div class="box-header">
-            <span>OUTPUT: ARGUS EXECUTIVE REVIEW SCORECARD</span>
-            <span class="status-badge" id="eval-status-badge">READY</span>
+        <div class="playground-workspace">
+          <div class="workspace-pane">
+            <div class="pane-header">INPUT: SAMPLE PR GIT DIFF</div>
+            <textarea id="diff-input" class="diff-textarea" placeholder="Paste your git diff or code here..."></textarea>
+            <button class="btn btn-lg btn-purple" id="run-argus-btn" style="border-top: var(--border-brutalist); border-radius: 0;">▶ RUN ARGUS EVALUATION</button>
           </div>
-          <div id="argus-output" class="argus-output-box">
-            <p class="placeholder-text">Click "RUN ARGUS 3-STAGE REVIEW" to evaluate sample code and render the executive scorecard...</p>
+
+          <div class="workspace-pane">
+            <div class="pane-header">OUTPUT: ARGUS EXECUTIVE REVIEW SCORECARD</div>
+            <div id="argus-output" class="argus-output-box">
+              <p class="placeholder-text">Click "RUN ARGUS EVALUATION" to execute sample code review...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -277,14 +314,12 @@
   <section class="section section-dark" id="documentation">
     <div class="section-container">
       <div class="section-header">
-        <span class="tag tag-purple">MASTER DOCUMENTATION HUB</span>
+        <span class="section-tag">MASTER DOCUMENTATION HUB</span>
         <h2 class="section-title">DOCUMENTATION, HYBRID ENGINE & RATE LIMIT GUIDANCE</h2>
-        <p class="section-subtitle">Complete setup manuals, hybrid provider auto-detection rules, action inputs, and API plan guidance.</p>
+        <p class="section-desc">Complete setup manuals, hybrid provider auto-detection rules, action inputs, and API plan guidance.</p>
       </div>
 
-      <!-- Docs Tabs / Subsections Grid -->
       <div class="docs-detail-grid">
-
         <!-- 1. Hybrid Provider Resolution -->
         <div class="doc-card">
           <div class="doc-card-title">🧠 HYBRID PROVIDER RESOLUTION & AUTO-DETECTION</div>
@@ -390,7 +425,6 @@
             <p><b>Zero CI Break Guarantee:</b> If rate limit errors occur on Free Tier keys, ARGUS's built-in <b>Fallback Static Analysis Engine</b> automatically completes the PR evaluation using offline static regex parsing without crashing your CI build pipeline.</p>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -399,17 +433,17 @@
   <section class="section" id="quickstart">
     <div class="section-container">
       <div class="section-header">
-        <span class="tag tag-cyan">EASY SETUP</span>
+        <span class="section-tag">EASY SETUP</span>
         <h2 class="section-title">QUICK START WORKFLOW SETUP</h2>
-        <p class="section-subtitle">Copy and paste this workflow file into your repository under <code class="inline-code">.github/workflows/argus.yml</code>.</p>
+        <p class="section-desc">Copy and paste this workflow file into your repository under <code class="inline-code">.github/workflows/argus.yml</code>.</p>
       </div>
 
-      <div class="code-block-wrapper">
-        <div class="code-header">
-          <span>.github/workflows/argus.yml</span>
-          <button class="btn btn-sm btn-ghost" id="copy-workflow-btn">COPY YAML</button>
+      <div class="quickstart-box">
+        <div class="qs-header">
+          <span class="file-path">.github/workflows/argus.yml</span>
+          <button class="btn btn-sm btn-ghost" id="copy-qs-btn">COPY WORKFLOW</button>
         </div>
-        <pre><code class="language-yaml">name: ARGUS AI Code Review
+        <pre><code class="language-yaml" id="qs-code">name: ARGUS AI Code Review
 
 on:
   pull_request:
