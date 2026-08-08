@@ -1,8 +1,15 @@
 const { describe, it } = require('node:test');
 const assert = require('assert');
+const { run } = require('../index');
 const generateTopologyMap = require('../skills/atlas');
 const evaluateArchitecture = require('../skills/athena');
 const detectTechnicalDebt = require('../skills/hermes');
+
+describe('ARGUS Action Entry Point Test', () => {
+  it('index.js exports run function', () => {
+    assert.strictEqual(typeof run, 'function', 'index.js must export run function');
+  });
+});
 
 describe('ARGUS Skills Unit Test Suite', () => {
   it('Atlas (generateTopologyMap) - returns valid flowchart TD block', async () => {
